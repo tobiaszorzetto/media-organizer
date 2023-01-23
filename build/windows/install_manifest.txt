@@ -1,0 +1,12 @@
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/icudtl.dat
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/flutter_windows.dll
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/AssetManifest.bin
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/AssetManifest.json
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/FontManifest.json
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/fonts/MaterialIcons-Regular.otf
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/kernel_blob.bin
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/NOTICES
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/NOTICES.Z
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/shaders/ink_sparkle.frag
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/version.json

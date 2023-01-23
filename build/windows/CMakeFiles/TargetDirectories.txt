@@ -1,0 +1,10 @@
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/CMakeFiles/INSTALL.dir
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/CMakeFiles/ALL_BUILD.dir
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/CMakeFiles/ZERO_CHECK.dir
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/flutter/CMakeFiles/flutter_wrapper_plugin.dir
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/flutter/CMakeFiles/flutter_wrapper_app.dir
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/flutter/CMakeFiles/flutter_assemble.dir
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/flutter/CMakeFiles/INSTALL.dir
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/CMakeFiles/media_organizer.dir
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/CMakeFiles/INSTALL.dir
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/CMakeFiles/ALL_BUILD.dir

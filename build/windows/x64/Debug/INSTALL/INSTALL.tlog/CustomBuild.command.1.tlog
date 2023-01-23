@@ -1,0 +1,10 @@
+^C:\USERS\TOBIA_MZP3YRU\DOCUMENTS\GITHUB\MEDIA-ORGANIZER\BUILD\WINDOWS\CMAKEFILES\90D85212FD9BDDA4AD807640F1AA41AB\INSTALL_FORCE.RULE
+setlocal
+cd .
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
