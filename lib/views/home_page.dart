@@ -20,7 +20,26 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            ListTile(
+              title: Text("Salvar"),
+              leading: Icon(Icons.save),
+              onTap: () => setState(() {
+                print("aaaa");
+                for(dynamic jsonMediaType in jsonDecode(jsonEncode(Catalogo.instance.medias.map((e) => e.toJson()).toList()))){
+                  print(MediaType.fromJson(jsonMediaType).name);
+                  print(MediaType.fromJson(jsonMediaType).medias);
+                  for(MediaModel midia in MediaType.fromJson(jsonMediaType).medias){
+                    print(midia.rating);
+                  }
+                }
+              }),
+            )
+          ],
+        ),
+      ),
       appBar: AppBar(
         actions: [
         ],
@@ -169,9 +188,7 @@ class _HomePageState extends State<HomePage> {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: (() {
-                          for(dynamic jsonMediaType in jsonDecode(jsonEncode(Catalogo.instance.medias.map((e) => e.toJson()).toList()))){
-                            print(MediaType.fromJson(jsonMediaType).medias);
-                          }
+                          
                         }), 
                         child: Text('Sort by'),
                         ),

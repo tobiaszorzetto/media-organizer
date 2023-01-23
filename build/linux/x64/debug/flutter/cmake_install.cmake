@@ -1,8 +1,8 @@
-# Install script for directory: /home/tobias/media-organizer/linux/flutter
+# Install script for directory: /home/tobias/media-organizer/media-organizer/linux/flutter
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/tobias/media-organizer/build/linux/x64/debug/bundle")
+  set(CMAKE_INSTALL_PREFIX "/home/tobias/media-organizer/media-organizer/build/linux/x64/debug/bundle")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 

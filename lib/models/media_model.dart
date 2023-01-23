@@ -56,7 +56,7 @@ class MediaType{
 
   factory MediaType.fromJson(dynamic json){
     var mediaType = MediaType(json['name'], json['id'] as int);
-    if(json['categorias'] != null){
+    if(json['medias'] != null){
       var _medias = json['medias'] as List;
       mediaType.medias = _medias.map((e) => MediaModel.fromJson(e)).toList();
     }

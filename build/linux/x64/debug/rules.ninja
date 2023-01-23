@@ -42,7 +42,7 @@ rule CXX_EXECUTABLE_LINKER__media_organizer
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /snap/flutter/130/usr/bin/cmake -S/home/tobias/media-organizer/linux -B/home/tobias/media-organizer/build/linux/x64/debug
+  command = /snap/flutter/130/usr/bin/cmake -S/home/tobias/media-organizer/media-organizer/linux -B/home/tobias/media-organizer/media-organizer/build/linux/x64/debug
   description = Re-running CMake...
   generator = 1
 
