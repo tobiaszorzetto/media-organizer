@@ -1,0 +1,12 @@
+/home/tobias/media-organizer/build/linux/x64/debug/bundle/media_organizer
+/home/tobias/media-organizer/build/linux/x64/debug/bundle/data/icudtl.dat
+/home/tobias/media-organizer/build/linux/x64/debug/bundle/lib/libflutter_linux_gtk.so
+/home/tobias/media-organizer/build/linux/x64/debug/bundle/data/flutter_assets/fonts/MaterialIcons-Regular.otf
+/home/tobias/media-organizer/build/linux/x64/debug/bundle/data/flutter_assets/NOTICES.Z
+/home/tobias/media-organizer/build/linux/x64/debug/bundle/data/flutter_assets/NOTICES
+/home/tobias/media-organizer/build/linux/x64/debug/bundle/data/flutter_assets/shaders/ink_sparkle.frag
+/home/tobias/media-organizer/build/linux/x64/debug/bundle/data/flutter_assets/kernel_blob.bin
+/home/tobias/media-organizer/build/linux/x64/debug/bundle/data/flutter_assets/AssetManifest.json
+/home/tobias/media-organizer/build/linux/x64/debug/bundle/data/flutter_assets/FontManifest.json
+/home/tobias/media-organizer/build/linux/x64/debug/bundle/data/flutter_assets/version.json
+/home/tobias/media-organizer/build/linux/x64/debug/bundle/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
