@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:media_organizer/models/media_model.dart';
 import 'package:media_organizer/views/home_page.dart';
 
 void main() {
+  syncCatalogo();
+}
+
+syncCatalogo() async {
+  await Catalogo.instance.pegarMediasJson();
   runApp(AppWidget());
 }
 
@@ -13,8 +19,6 @@ class AppWidget extends StatelessWidget {
       routes: {
         '/': ((context) => HomePage()),
       },
-      
     );
   }
 }
-
