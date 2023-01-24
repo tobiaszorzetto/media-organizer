@@ -1,10 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:convert';
-
+import 'package:context_menus/context_menus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_simple_treeview/flutter_simple_treeview.dart';
 import 'package:media_organizer/controllers/file_manager.dart';
 import 'package:media_organizer/models/media_model.dart';
 
@@ -20,32 +18,33 @@ class _HomePageState extends State<HomePage> {
   bool filterMenuvisible = false;
   @override
   Widget build(BuildContext context) {
-    filterMedia();
-    return Scaffold(
-      drawer: Drawer(
-        child: Column(
-          children: [
-            ListTile(
-              title: Text("Salvar"),
-              leading: Icon(Icons.save),
-              onTap: () => setState(() {
-                FileManager.instance.writeJsonFile();
-              }),
-            )
-          ],
+    return ContextMenuOverlay(
+      child: Scaffold(
+        drawer: Drawer(
+          child: Column(
+            children: [
+              ListTile(
+                title: Text("Salvar"),
+                leading: Icon(Icons.save),
+                onTap: () => setState(() {
+                  FileManager.instance.writeJsonFile();
+                }),
+              )
+            ],
+          ),
         ),
-      ),
-      appBar: AppBar(
-        actions: [],
-      ),
-      body: SizedBox(
-        height: double.infinity,
-        width: double.infinity,
-        child: Column(
-          children: [
-            searchingRow(),
-            contentRow(),
-          ],
+        appBar: AppBar(
+          actions: [],
+        ),
+        body: SizedBox(
+          height: double.infinity,
+          width: double.infinity,
+          child: Column(
+            children: [
+              searchingRow(),
+              contentRow(),
+            ],
+          ),
         ),
       ),
     );
@@ -115,23 +114,32 @@ class _HomePageState extends State<HomePage> {
   Widget buildMediaTypeTile(MediaType mediaType) {
     return ExpansionTile(
       title: Text(mediaType.name),
-      children: mediaType.medias.map((e) => buildMediaTile(e)).toList(),
+      children:
+          mediaType.medias.map((e) => buildMediaTile(e, mediaType)).toList(),
     );
   }
 
-  Widget buildMediaTile(MediaModel media) {
-    return ListTile(
-      title: Text(media.name),
-      subtitle: Text(media.description),
-      trailing: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          Text(media.rating.toString(),
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          Icon(Icons.star)
-        ],
+  Widget buildMediaTile(MediaModel media, MediaType mediaType) {
+    return ContextMenuRegion(
+      contextMenu: GenericContextMenu(buttonConfigs: [
+        ContextMenuButtonConfig("Excluir mídia",
+            onPressed: () => setState(() {
+                  Catalogo.instance.deleteMedia(media, mediaType.id);
+                })),
+      ]),
+      child: ListTile(
+        title: Text(media.name),
+        subtitle: Text(media.description),
+        trailing: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Text(media.rating.toString(),
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            Icon(Icons.star)
+          ],
+        ),
+        leading: media.image,
       ),
-      leading: media.image,
     );
   }
 
