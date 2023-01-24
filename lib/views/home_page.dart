@@ -6,18 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:media_organizer/controllers/file_manager.dart';
 import 'package:media_organizer/models/media_model.dart';
 
+import '../controllers/home_controller.dart';
+
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<MediaType> medias = List.of(Catalogo.instance.medias);
   double _ratingObserved = 0;
-  RangeValues ratingsObservados = RangeValues(0, 10);
   bool filterMenuvisible = false;
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      HomeController.instance
+          .updateVisibleMedias(List.of(Catalogo.instance.medias));
+      HomeController.instance.filterMedia();
+    });
     return ContextMenuOverlay(
       child: Scaffold(
         drawer: Drawer(
@@ -78,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                             Catalogo.instance.categorias[index].description),
                         onChanged: (value) => setState(() {
                           Catalogo.instance.categoriasFiltradas[index] = value!;
-                          filterMedia();
+                          HomeController.instance.filterMedia();
                         }),
                       );
                     }),
@@ -97,9 +102,10 @@ class _HomePageState extends State<HomePage> {
                   color: Color.fromARGB(255, 232, 243, 251),
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: medias.length,
+                    itemCount: HomeController.instance.visibleMedias.length,
                     itemBuilder: ((context, index) {
-                      return buildMediaTypeTile(medias[index]);
+                      return buildMediaTypeTile(
+                          HomeController.instance.visibleMedias[index]);
                     }),
                   ),
                 ),
@@ -173,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                     label: Text('Pesquise titulos'),
                   ),
                   onChanged: (value) => setState(() {
-                    filterMedia(pesquisa: value);
+                    HomeController.instance.filterMedia(pesquisa: value);
                   }),
                 ),
               ),
@@ -197,35 +203,47 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          Visibility(
-            visible: filterMenuvisible,
-            child: Card(
-                child: Column(
-              children: [
-                RangeSlider(
-                    min: 0,
-                    max: 10,
-                    labels: RangeLabels(
-                        ratingsObservados.start.round().toString(),
-                        ratingsObservados.end.round().toString()),
-                    values: ratingsObservados,
-                    onChanged: ((value) => setState(() {
-                          ratingsObservados = value;
-                          filterMedia();
-                        }))),
-                Text(ratingsObservados.start.round().toString()),
-                Text(ratingsObservados.end.round().toString()),
-              ],
-            )),
-          )
+          filterMenu(),
         ],
       ),
     );
   }
 
+  Widget filterMenu() {
+    return Visibility(
+      visible: filterMenuvisible,
+      child: Card(
+          child: Column(
+        children: [
+          RangeSlider(
+              min: 0,
+              max: 10,
+              labels: RangeLabels(
+                  HomeController.instance.filterRatingsObservados.start
+                      .round()
+                      .toString(),
+                  HomeController.instance.filterRatingsObservados.end
+                      .round()
+                      .toString()),
+              values: HomeController.instance.filterRatingsObservados,
+              onChanged: ((value) => setState(() {
+                    HomeController.instance.filterRatingsObservados = value;
+                    HomeController.instance.filterMedia();
+                  }))),
+          Text(HomeController.instance.filterRatingsObservados.start
+              .round()
+              .toString()),
+          Text(HomeController.instance.filterRatingsObservados.end
+              .round()
+              .toString()),
+        ],
+      )),
+    );
+  }
+
   pegarMediasJson() async {
     await Catalogo.instance.pegarMediasJson();
-    filterMedia();
+    HomeController.instance.filterMedia();
   }
 
   openAddMediaDialog(double _ratingObserved, List<bool> categoriasEscolhidas) {
@@ -330,7 +348,7 @@ class _HomePageState extends State<HomePage> {
                           imagem: imagem,
                           tipoSelected: tipoSelected);
 
-                      filterMedia();
+                      HomeController.instance.filterMedia();
                       Navigator.of(context).pop();
                     })),
                 child: Text("Pronto")),
@@ -381,41 +399,12 @@ class _HomePageState extends State<HomePage> {
               onPressed: (() => setState(() {
                     Catalogo.instance.addCategory(Categoria(name, description,
                         Catalogo.instance.categorias.length));
-                    filterMedia();
+                    HomeController.instance.filterMedia();
                     Navigator.of(context).pop();
                   })),
               child: Text("Pronto")),
         ],
       ),
     );
-  }
-
-  void filterMedia({String pesquisa = ''}) {
-    final List<MediaType> confirmados = [];
-
-    for (MediaType tipoMedia in Catalogo.instance.medias) {
-      confirmados.add(MediaType(tipoMedia.name, tipoMedia.id));
-      confirmados[tipoMedia.id].medias =
-          Catalogo.instance.medias[tipoMedia.id].medias.where((media) {
-        if (media.rating < ratingsObservados.start.round() ||
-            media.rating > ratingsObservados.end.round()) {
-          return false;
-        }
-        if (media.categorias.isEmpty) {
-          return media.name.toLowerCase().contains(pesquisa.toLowerCase());
-        }
-        for (Categoria categoria in media.categorias) {
-          if (Catalogo.instance.categoriasFiltradas[categoria.id]) {
-            return media.name.toLowerCase().contains(pesquisa.toLowerCase());
-          }
-        }
-
-        return false;
-      }).toList();
-    }
-
-    setState(() {
-      medias = confirmados;
-    });
   }
 }
