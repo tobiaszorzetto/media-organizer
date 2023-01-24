@@ -1,5 +1,6 @@
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/icudtl.dat
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/flutter_windows.dll
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/url_launcher_windows_plugin.dll
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/AssetManifest.bin
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/AssetManifest.json
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/FontManifest.json
