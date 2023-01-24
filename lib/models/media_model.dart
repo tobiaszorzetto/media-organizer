@@ -82,6 +82,10 @@ class Catalogo {
     medias = await FileManager.instance.readJsonFile();
   }
 
+  deleteMedia(MediaModel media, int mediaTypeId) {
+    medias[mediaTypeId].medias.remove(media);
+  }
+
   addCategory(Categoria categoria) {
     categorias.add(categoria);
     categoriasFiltradas.add(true);
