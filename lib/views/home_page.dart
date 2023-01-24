@@ -14,8 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  double _ratingObserved = 0;
-  bool filterMenuvisible = false;
   @override
   Widget build(BuildContext context) {
     setState(() {
@@ -158,14 +156,8 @@ class _HomePageState extends State<HomePage> {
             children: [
               FloatingActionButton(
                 onPressed: (() => setState(() {
-                      _ratingObserved = 0;
-                      List<bool> categoriasEscolhidas = [];
-                      for (int i = 0;
-                          i < Catalogo.instance.category_count;
-                          i++) {
-                        categoriasEscolhidas.add(false);
-                      }
-                      openAddMediaDialog(_ratingObserved, categoriasEscolhidas);
+                      HomeController.instance.ratingObserved = 0;
+                      openAddMediaDialog();
                     })),
                 child: Icon(Icons.add),
               ),
@@ -186,7 +178,7 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: (() => setState(() {
-                        filterMenuvisible = !filterMenuvisible;
+                        HomeController.instance.changeFilterMenuVisbility();
                       })),
                   child: Text('filtrar'),
                 ),
@@ -195,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                 child: ElevatedButton(
                   onPressed: (() {
                     setState(() {
-                      pegarMediasJson();
+                      HomeController.instance.pegarMediasJson();
                     });
                   }),
                   child: Text('Sort by'),
@@ -211,7 +203,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget filterMenu() {
     return Visibility(
-      visible: filterMenuvisible,
+      visible: HomeController.instance.filterMenuvisible,
       child: Card(
           child: Column(
         children: [
@@ -241,16 +233,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  pegarMediasJson() async {
-    await Catalogo.instance.pegarMediasJson();
-    HomeController.instance.filterMedia();
-  }
-
-  openAddMediaDialog(double _ratingObserved, List<bool> categoriasEscolhidas) {
+  openAddMediaDialog() {
     String name = '';
     String description = '';
     String imagem = '';
     MediaType tipoSelected = Catalogo.instance.medias[0];
+
+    List<bool> categoriasEscolhidas =
+        Catalogo.instance.categorias.map((e) => false).toList();
 
     return showDialog(
       context: context,
@@ -297,12 +287,13 @@ class _HomePageState extends State<HomePage> {
                     Text('Avaliação'),
                     SizedBox(
                       child: Slider(
-                        value: _ratingObserved,
+                        value: HomeController.instance.ratingObserved,
                         max: 10,
                         divisions: 20,
-                        label: _ratingObserved.toString(),
+                        label:
+                            HomeController.instance.ratingObserved.toString(),
                         onChanged: ((value) => setState(() {
-                              _ratingObserved = value;
+                              HomeController.instance.ratingObserved = value;
                             })),
                       ),
                     ),
@@ -342,7 +333,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: (() => setState(() {
                       Catalogo.instance.createMedia(
                           name: name,
-                          rating: _ratingObserved,
+                          rating: HomeController.instance.ratingObserved,
                           description: description,
                           categoriasEscolhidas: categoriasEscolhidas,
                           imagem: imagem,
@@ -397,9 +388,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           TextButton(
               onPressed: (() => setState(() {
-                    Catalogo.instance.addCategory(Categoria(name, description,
-                        Catalogo.instance.categorias.length));
-                    HomeController.instance.filterMedia();
+                    HomeController.instance.createCategory(name, description);
                     Navigator.of(context).pop();
                   })),
               child: Text("Pronto")),

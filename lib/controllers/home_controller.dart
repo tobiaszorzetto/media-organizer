@@ -6,10 +6,22 @@ class HomeController {
 
   List<MediaType> visibleMedias = [];
 
+  double ratingObserved = 0;
+
+  bool filterMenuvisible = false;
   RangeValues filterRatingsObservados = RangeValues(0, 10);
+
+  pegarMediasJson() async {
+    await Catalogo.instance.pegarMediasJson();
+    HomeController.instance.filterMedia();
+  }
 
   void updateVisibleMedias(List<MediaType> nemMedias) {
     visibleMedias = nemMedias;
+  }
+
+  void changeFilterMenuVisbility() {
+    filterMenuvisible = !filterMenuvisible;
   }
 
   void filterMedia({String pesquisa = ''}) {
@@ -36,5 +48,14 @@ class HomeController {
       }).toList();
     }
     visibleMedias = confirmados;
+  }
+
+  void createCategory(
+    String name,
+    String description,
+  ) {
+    Catalogo.instance.addCategory(
+        Categoria(name, description, Catalogo.instance.categorias.length));
+    filterMedia();
   }
 }
