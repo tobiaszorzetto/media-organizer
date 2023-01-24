@@ -78,6 +78,30 @@ class Catalogo {
   List<Categoria> categorias = [];
   List<bool> categoriasFiltradas = [];
 
+  MediaModel createMedia(
+      {required String name,
+      required double rating,
+      description = '',
+      required String imagem,
+      required List<bool> categoriasEscolhidas,
+      required MediaType tipoSelected}) {
+    List<Categoria> categorias = [];
+    Widget? image = Icon(Icons.movie_rounded);
+    for (int i = 0; i < categoriasEscolhidas.length; i++) {
+      if (categoriasEscolhidas[i]) {
+        categorias.add(Catalogo.instance.categorias[i]);
+      }
+    }
+    if (imagem != '') {
+      try {
+        image = Image.network(imagem);
+      } finally {}
+    }
+
+    var media = MediaModel(name, rating, description, categorias, image);
+    Catalogo.instance.addMedia(media, tipoSelected);
+  }
+
   pegarMediasJson() async {
     medias = await FileManager.instance.readJsonFile();
   }
