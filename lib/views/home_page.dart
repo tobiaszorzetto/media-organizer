@@ -176,11 +176,12 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Expanded(
-                child: ElevatedButton(
-                  onPressed: (() => setState(() {
+                child: ExpansionTile(
+                  trailing: Icon(Icons.filter_alt),
+                  onExpansionChanged: ((value) => setState(() {
                         HomeController.instance.changeFilterMenuVisbility();
                       })),
-                  child: Text('filtrar'),
+                  title: Text('filtrar'),
                 ),
               ),
               Expanded(child: sortBy()),
@@ -218,6 +219,28 @@ class _HomePageState extends State<HomePage> {
           ]),
           value: 1,
           title: Text("Alphabetical"),
+          groupValue: HomeController.instance.sortType,
+          onChanged: (value) => setState(() {
+            HomeController.instance.sortType = value!;
+          }),
+        ),
+        RadioListTile(
+          secondary: Wrap(
+              children: [Icon(Icons.date_range), Icon(Icons.arrow_downward)]),
+          value: 2,
+          title: Wrap(children: [
+            Text("Date & Time"),
+          ]),
+          groupValue: HomeController.instance.sortType,
+          onChanged: (value) => setState(() {
+            HomeController.instance.sortType = value!;
+          }),
+        ),
+        RadioListTile(
+          secondary: Wrap(
+              children: [Icon(Icons.date_range), Icon(Icons.arrow_upward)]),
+          value: 3,
+          title: Text("Date & Time"),
           groupValue: HomeController.instance.sortType,
           onChanged: (value) => setState(() {
             HomeController.instance.sortType = value!;
