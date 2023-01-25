@@ -179,15 +179,15 @@ class _HomePageState extends State<HomePage> {
                 child: ExpansionTile(
                   trailing: Icon(Icons.filter_alt),
                   onExpansionChanged: ((value) => setState(() {
-                        HomeController.instance.changeFilterMenuVisbility();
+                        //HomeController.instance.changeFilterMenuVisbility();
                       })),
                   title: Text('filtrar'),
+                  children: [filterMenu()],
                 ),
               ),
               Expanded(child: sortBy()),
             ],
           ),
-          filterMenu(),
         ],
       ),
     );
@@ -253,48 +253,62 @@ class _HomePageState extends State<HomePage> {
   Widget filterMenu() {
     return Visibility(
       visible: HomeController.instance.filterMenuvisible,
-      child: Card(
-          child: Column(
+      child: Column(
         children: [
-          RangeSlider(
-              min: 0,
-              max: 10,
-              labels: RangeLabels(
-                  HomeController.instance.filterRatingsObservados.start
-                      .round()
-                      .toString(),
-                  HomeController.instance.filterRatingsObservados.end
-                      .round()
-                      .toString()),
-              values: HomeController.instance.filterRatingsObservados,
-              onChanged: ((value) => setState(() {
-                    HomeController.instance.filterRatingsObservados = value;
-                    HomeController.instance.filterMedia();
-                  }))),
-          Text(HomeController.instance.filterRatingsObservados.start
-              .round()
-              .toString()),
-          Text(HomeController.instance.filterRatingsObservados.end
-              .round()
-              .toString()),
-          RangeSlider(
-            min: Catalogo.instance.oldestDateTime.millisecondsSinceEpoch
-                .toDouble(),
-            max: DateTime.now().millisecondsSinceEpoch.toDouble(),
-            values: HomeController.instance.filterDateObservados,
-            onChanged: ((value) => setState(() {
-                  HomeController.instance.filterDateObservados = value;
-                  HomeController.instance.filterMedia();
-                })),
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(Icons.star),
+                  title: Text("Date and Time"),
+                ),
+                RangeSlider(
+                    min: 0,
+                    max: 10,
+                    divisions: 20,
+                    labels: RangeLabels(
+                        "${HomeController.instance.filterRatingsObservados.start}",
+                        "${HomeController.instance.filterRatingsObservados.end}"),
+                    values: HomeController.instance.filterRatingsObservados,
+                    onChanged: ((value) => setState(() {
+                          HomeController.instance.filterRatingsObservados =
+                              value;
+                          HomeController.instance.filterMedia();
+                        }))),
+              ],
+            ),
           ),
-          Text(DateTime.fromMillisecondsSinceEpoch(
-                  HomeController.instance.filterDateObservados.start.toInt())
-              .toString()),
-          Text(DateTime.fromMillisecondsSinceEpoch(
-                  HomeController.instance.filterDateObservados.end.toInt())
-              .toString()),
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(Icons.date_range),
+                  title: Text("Date and Time"),
+                ),
+                RangeSlider(
+                  min: Catalogo.instance.oldestDateTime.millisecondsSinceEpoch
+                      .toDouble(),
+                  max: DateTime.now().millisecondsSinceEpoch.toDouble(),
+                  divisions: 100,
+                  values: HomeController.instance.filterDateObservados,
+                  labels: RangeLabels(
+                      DateTime.fromMillisecondsSinceEpoch(HomeController
+                              .instance.filterDateObservados.start
+                              .toInt())
+                          .toString(),
+                      HomeController.instance.filterDateObservados.end
+                          .round()
+                          .toString()),
+                  onChanged: ((value) => setState(() {
+                        HomeController.instance.filterDateObservados = value;
+                        HomeController.instance.filterMedia();
+                      })),
+                ),
+              ],
+            ),
+          ),
         ],
-      )),
+      ),
     );
   }
 
