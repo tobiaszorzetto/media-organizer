@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                 width: 20,
               ),
               Expanded(
-                flex: 6,
+                flex: 5,
                 child: TextField(
                   decoration: InputDecoration(
                     label: Text('Pesquise titulos'),
@@ -183,21 +183,47 @@ class _HomePageState extends State<HomePage> {
                   child: Text('filtrar'),
                 ),
               ),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: (() {
-                    setState(() {
-                      HomeController.instance.changeSortType();
-                    });
-                  }),
-                  child: Text('Sort by'),
-                ),
-              ),
+              Expanded(child: sortBy()),
             ],
           ),
           filterMenu(),
         ],
       ),
+    );
+  }
+
+  ExpansionTile sortBy() {
+    return ExpansionTile(
+      title: Text("Sort by"),
+      trailing: Icon(Icons.sort),
+      children: [
+        RadioListTile(
+          secondary: Wrap(children: [
+            Icon(Icons.sort_by_alpha_outlined),
+            Icon(Icons.arrow_downward)
+          ]),
+          value: 0,
+          title: Wrap(children: [
+            Text("Alphabetical"),
+          ]),
+          groupValue: HomeController.instance.sortType,
+          onChanged: (value) => setState(() {
+            HomeController.instance.sortType = value!;
+          }),
+        ),
+        RadioListTile(
+          secondary: Wrap(children: [
+            Icon(Icons.sort_by_alpha_outlined),
+            Icon(Icons.arrow_upward)
+          ]),
+          value: 1,
+          title: Text("Alphabetical"),
+          groupValue: HomeController.instance.sortType,
+          onChanged: (value) => setState(() {
+            HomeController.instance.sortType = value!;
+          }),
+        )
+      ],
     );
   }
 
