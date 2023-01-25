@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
       ]),
       child: ListTile(
         title: Text(media.name),
-        subtitle: Text(media.description),
+        subtitle: Text("${media.description} inserido: ${media.dateTime} "),
         trailing: Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                 child: ElevatedButton(
                   onPressed: (() {
                     setState(() {
-                      HomeController.instance.pegarMediasJson();
+                      HomeController.instance.changeSortType();
                     });
                   }),
                   child: Text('Sort by'),
@@ -227,6 +227,22 @@ class _HomePageState extends State<HomePage> {
               .toString()),
           Text(HomeController.instance.filterRatingsObservados.end
               .round()
+              .toString()),
+          RangeSlider(
+            min: Catalogo.instance.oldestDateTime.millisecondsSinceEpoch
+                .toDouble(),
+            max: DateTime.now().millisecondsSinceEpoch.toDouble(),
+            values: HomeController.instance.filterDateObservados,
+            onChanged: ((value) => setState(() {
+                  HomeController.instance.filterDateObservados = value;
+                  HomeController.instance.filterMedia();
+                })),
+          ),
+          Text(DateTime.fromMillisecondsSinceEpoch(
+                  HomeController.instance.filterDateObservados.start.toInt())
+              .toString()),
+          Text(DateTime.fromMillisecondsSinceEpoch(
+                  HomeController.instance.filterDateObservados.end.toInt())
               .toString()),
         ],
       )),

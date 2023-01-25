@@ -50,6 +50,12 @@ class FileManager {
         for (dynamic jsonMediaType in mediaTypeMap) {
           MediaType mediaType = MediaType.fromJson(jsonMediaType);
           mediasIniciais.add(mediaType);
+          for (MediaModel media in mediaType.medias) {
+            if (media.dateTime.millisecondsSinceEpoch <
+                Catalogo.instance.oldestDateTime.millisecondsSinceEpoch) {
+              Catalogo.instance.oldestDateTime = media.dateTime;
+            }
+          }
         }
       } catch (e) {
         print(e);
