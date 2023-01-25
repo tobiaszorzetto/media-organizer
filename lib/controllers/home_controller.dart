@@ -5,11 +5,14 @@ class HomeController {
   static HomeController instance = HomeController();
 
   List<MediaType> visibleMedias = [];
-
+  int sortType = 0;
   double ratingObserved = 0;
 
   bool filterMenuvisible = false;
   RangeValues filterRatingsObservados = RangeValues(0, 10);
+  RangeValues filterDateObservados = RangeValues(
+      Catalogo.instance.oldestDateTime.millisecondsSinceEpoch.toDouble(),
+      DateTime.now().millisecondsSinceEpoch.toDouble());
 
   pegarMediasJson() async {
     await Catalogo.instance.pegarMediasJson();
@@ -35,6 +38,11 @@ class HomeController {
             media.rating > filterRatingsObservados.end.round()) {
           return false;
         }
+        if (media.dateTime.millisecondsSinceEpoch <
+                filterDateObservados.start ||
+            media.dateTime.millisecondsSinceEpoch > filterDateObservados.end) {
+          return false;
+        }
         if (media.categorias.isEmpty) {
           return media.name.toLowerCase().contains(pesquisa.toLowerCase());
         }
@@ -48,6 +56,22 @@ class HomeController {
       }).toList();
     }
     visibleMedias = confirmados;
+    sortMedias();
+  }
+
+  void sortMedias() {
+    if (sortType == 0) {
+      for (MediaType mediaType in visibleMedias) {
+        mediaType.medias
+            .sort((item1, item2) => item1.name.compareTo(item2.name));
+      }
+    }
+    if (sortType == 1) {
+      for (MediaType mediaType in visibleMedias) {
+        mediaType.medias
+            .sort((item1, item2) => item2.name.compareTo(item1.name));
+      }
+    }
   }
 
   void createCategory(
@@ -57,5 +81,13 @@ class HomeController {
     Catalogo.instance.addCategory(
         Categoria(name, description, Catalogo.instance.categorias.length));
     filterMedia();
+  }
+
+  void changeSortType() {
+    if (sortType == 1) {
+      sortType = 0;
+    } else {
+      sortType = 1;
+    }
   }
 }

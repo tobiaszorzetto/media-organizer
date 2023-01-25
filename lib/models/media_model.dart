@@ -7,23 +7,30 @@ class MediaModel {
   final String description;
   final List<Categoria> categorias;
   final Widget? image;
+  final DateTime dateTime;
 
-  MediaModel(
-      this.name, this.rating, this.description, this.categorias, this.image);
+  MediaModel(this.name, this.rating, this.description, this.categorias,
+      this.image, this.dateTime);
 
   Map toJson() => {
         'name': name,
         'rating': rating,
         'description': description,
-        'categorias': categorias.map((e) => e.toJson()).toList()
+        'categorias': categorias.map((e) => e.toJson()).toList(),
+        'datetime': dateTime.millisecondsSinceEpoch
       };
 
   factory MediaModel.fromJson(dynamic json) {
     var categoriasObjsJson = json['categorias'] as List;
     List<Categoria> _categorias =
         categoriasObjsJson.map((e) => Categoria.fromJson(e)).toList();
-    return MediaModel(json['name'], json['rating'] as double,
-        json['description'], _categorias, Icon(Icons.movie));
+    return MediaModel(
+        json['name'],
+        json['rating'] as double,
+        json['description'],
+        _categorias,
+        Icon(Icons.movie),
+        DateTime.fromMicrosecondsSinceEpoch(json['datetime']));
   }
 }
 
@@ -67,6 +74,7 @@ class MediaType {
 class Catalogo {
   int media_count = 0;
   int category_count = 0;
+  DateTime oldestDateTime = DateTime.now();
   static Catalogo instance = Catalogo();
 
   List<MediaType> medias = [
@@ -97,8 +105,10 @@ class Catalogo {
         image = Image.network(imagem);
       } finally {}
     }
+    DateTime dateTime = DateTime.now();
 
-    var media = MediaModel(name, rating, description, categorias, image);
+    var media = MediaModel(
+        name, rating, description, categorias, image, DateTime.now());
     Catalogo.instance.addMedia(media, tipoSelected);
   }
 
