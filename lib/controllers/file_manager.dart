@@ -24,6 +24,11 @@ class FileManager {
     return File('$path/info.json');
   }
 
+  Future<File> get _jsonCategoryFile async {
+    final path = await _localPath;
+    return File('$path/infoCategory.json');
+  }
+
   readTextFile() async {
     String fileContent = 'Arquivos';
     File file = await _jsonFile;
@@ -70,5 +75,31 @@ class FileManager {
     var jsonMedias =
         jsonEncode(Catalogo.instance.medias.map((e) => e.toJson()).toList());
     await file.writeAsString(jsonMedias);
+  }
+
+  Future<List<Categoria>> readJsonCategoryFile() async {
+    String fileContent = 'Arquivos Categorias';
+    File file = await _jsonCategoryFile;
+    List<Categoria> categoriasIniciais = [];
+    if (await file.exists()) {
+      try {
+        fileContent = await file.readAsString();
+        var categoryMap = jsonDecode(fileContent);
+        for (dynamic jsonCategory in categoryMap) {
+          categoriasIniciais.add(Categoria.fromJson(jsonCategory));
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+
+    return categoriasIniciais;
+  }
+
+  Future writeJsonCategoryFile() async {
+    File file = await _jsonCategoryFile;
+    var jsonCategories = jsonEncode(
+        Catalogo.instance.categorias.map((e) => e.toJson()).toList());
+    await file.writeAsString(jsonCategories);
   }
 }

@@ -8,6 +8,7 @@ void main() {
 
 syncCatalogo() async {
   await Catalogo.instance.pegarMediasJson();
+  await Catalogo.instance.pegarCategoriasJson();
   runApp(AppWidget());
 }
 

@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
                 title: Text("Salvar"),
                 leading: Icon(Icons.save),
                 onTap: () => setState(() {
+                  FileManager.instance.writeJsonCategoryFile();
                   FileManager.instance.writeJsonFile();
                 }),
               )

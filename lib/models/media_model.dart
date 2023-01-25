@@ -115,6 +115,12 @@ class Catalogo {
     medias = await FileManager.instance.readJsonFile();
   }
 
+  pegarCategoriasJson() async {
+    categorias = await FileManager.instance.readJsonCategoryFile();
+    category_count = categorias.length;
+    categoriasFiltradas = categorias.map((e) => true).toList();
+  }
+
   deleteMedia(MediaModel media, int mediaTypeId) {
     medias[mediaTypeId].medias.remove(media);
   }
