@@ -251,64 +251,60 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget filterMenu() {
-    return Visibility(
-      visible: HomeController.instance.filterMenuvisible,
-      child: Column(
-        children: [
-          Card(
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(Icons.star),
-                  title: Text("Rating"),
-                ),
-                RangeSlider(
-                    min: 0,
-                    max: 10,
-                    divisions: 20,
-                    labels: RangeLabels(
-                        "${HomeController.instance.filterRatingsObservados.start}",
-                        "${HomeController.instance.filterRatingsObservados.end}"),
-                    values: HomeController.instance.filterRatingsObservados,
-                    onChanged: ((value) => setState(() {
-                          HomeController.instance.filterRatingsObservados =
-                              value;
-                          HomeController.instance.filterMedia();
-                        }))),
-              ],
-            ),
-          ),
-          Card(
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(Icons.date_range),
-                  title: Text("Date and Time"),
-                ),
-                RangeSlider(
-                  min: Catalogo.instance.oldestDateTime.millisecondsSinceEpoch
-                      .toDouble(),
-                  max: DateTime.now().millisecondsSinceEpoch.toDouble(),
-                  divisions: 100,
-                  values: HomeController.instance.filterDateObservados,
+    return Column(
+      children: [
+        Card(
+          child: Column(
+            children: [
+              ListTile(
+                leading: Icon(Icons.star),
+                title: Text("Rating"),
+              ),
+              RangeSlider(
+                  min: 0,
+                  max: 10,
+                  divisions: 20,
                   labels: RangeLabels(
-                      DateTime.fromMillisecondsSinceEpoch(HomeController
-                              .instance.filterDateObservados.start
-                              .toInt())
-                          .toString(),
-                      HomeController.instance.filterDateObservados.end
-                          .round()
-                          .toString()),
+                      "${HomeController.instance.filterRatingsObservados.start}",
+                      "${HomeController.instance.filterRatingsObservados.end}"),
+                  values: HomeController.instance.filterRatingsObservados,
                   onChanged: ((value) => setState(() {
-                        HomeController.instance.filterDateObservados = value;
+                        HomeController.instance.filterRatingsObservados = value;
                         HomeController.instance.filterMedia();
-                      })),
-                ),
-              ],
-            ),
+                      }))),
+            ],
           ),
-        ],
-      ),
+        ),
+        Card(
+          child: Column(
+            children: [
+              ListTile(
+                leading: Icon(Icons.date_range),
+                title: Text("Date and Time"),
+              ),
+              RangeSlider(
+                min: Catalogo.instance.oldestDateTime.millisecondsSinceEpoch
+                    .toDouble(),
+                max: DateTime.now().millisecondsSinceEpoch.toDouble(),
+                divisions: 100,
+                values: HomeController.instance.filterDateObservados,
+                labels: RangeLabels(
+                    DateTime.fromMillisecondsSinceEpoch(HomeController
+                            .instance.filterDateObservados.start
+                            .toInt())
+                        .toString(),
+                    HomeController.instance.filterDateObservados.end
+                        .round()
+                        .toString()),
+                onChanged: ((value) => setState(() {
+                      HomeController.instance.filterDateObservados = value;
+                      HomeController.instance.filterMedia();
+                    })),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
