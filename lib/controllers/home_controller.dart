@@ -60,18 +60,22 @@ class HomeController {
   }
 
   void sortMedias() {
+    for (MediaType mediaType in visibleMedias) {
+      mediaType.medias.sort((item1, item2) => _compare(item1, item2));
+    }
+  }
+
+  int _compare(MediaModel item1, MediaModel item2) {
     if (sortType == 0) {
-      for (MediaType mediaType in visibleMedias) {
-        mediaType.medias
-            .sort((item1, item2) => item1.name.compareTo(item2.name));
-      }
+      return item1.name.compareTo(item2.name);
+    } else if (sortType == 1) {
+      return item2.name.compareTo(item1.name);
+    } else if (sortType == 2) {
+      return item1.dateTime.compareTo(item2.dateTime);
+    } else if (sortType == 3) {
+      return item2.dateTime.compareTo(item1.dateTime);
     }
-    if (sortType == 1) {
-      for (MediaType mediaType in visibleMedias) {
-        mediaType.medias
-            .sort((item1, item2) => item2.name.compareTo(item1.name));
-      }
-    }
+    return -1;
   }
 
   void createCategory(
