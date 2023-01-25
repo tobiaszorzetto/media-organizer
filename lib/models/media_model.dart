@@ -30,7 +30,7 @@ class MediaModel {
         json['description'],
         _categorias,
         Icon(Icons.movie),
-        DateTime.fromMicrosecondsSinceEpoch(json['datetime']));
+        DateTime.fromMillisecondsSinceEpoch(json['datetime']));
   }
 }
 
@@ -105,7 +105,6 @@ class Catalogo {
         image = Image.network(imagem);
       } finally {}
     }
-    DateTime dateTime = DateTime.now();
 
     var media = MediaModel(
         name, rating, description, categorias, image, DateTime.now());

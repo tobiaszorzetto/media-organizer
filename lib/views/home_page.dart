@@ -133,8 +133,7 @@ class _HomePageState extends State<HomePage> {
       ]),
       child: ListTile(
         title: Text(media.name),
-        subtitle: Text(
-            "${media.description}${media.dateTime.microsecondsSinceEpoch} "),
+        subtitle: Text("${media.description} inserido: ${media.dateTime} "),
         trailing: Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
