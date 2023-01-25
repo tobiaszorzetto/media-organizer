@@ -260,7 +260,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 ListTile(
                   leading: Icon(Icons.star),
-                  title: Text("Date and Time"),
+                  title: Text("Rating"),
                 ),
                 RangeSlider(
                     min: 0,
