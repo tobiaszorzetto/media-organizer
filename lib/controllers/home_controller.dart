@@ -5,11 +5,14 @@ class HomeController {
   static HomeController instance = HomeController();
 
   List<MediaType> visibleMedias = [];
-
+  int sortType = 0;
   double ratingObserved = 0;
 
   bool filterMenuvisible = false;
   RangeValues filterRatingsObservados = RangeValues(0, 10);
+  RangeValues filterDateObservados = RangeValues(
+      Catalogo.instance.oldestDateTime.millisecondsSinceEpoch.toDouble(),
+      DateTime.now().millisecondsSinceEpoch.toDouble());
 
   pegarMediasJson() async {
     await Catalogo.instance.pegarMediasJson();
@@ -35,6 +38,11 @@ class HomeController {
             media.rating > filterRatingsObservados.end.round()) {
           return false;
         }
+        if (media.dateTime.millisecondsSinceEpoch <
+                filterDateObservados.start ||
+            media.dateTime.millisecondsSinceEpoch > filterDateObservados.end) {
+          return false;
+        }
         if (media.categorias.isEmpty) {
           return media.name.toLowerCase().contains(pesquisa.toLowerCase());
         }
@@ -48,6 +56,26 @@ class HomeController {
       }).toList();
     }
     visibleMedias = confirmados;
+    sortMedias();
+  }
+
+  void sortMedias() {
+    for (MediaType mediaType in visibleMedias) {
+      mediaType.medias.sort((item1, item2) => _compare(item1, item2));
+    }
+  }
+
+  int _compare(MediaModel item1, MediaModel item2) {
+    if (sortType == 0) {
+      return item1.name.compareTo(item2.name);
+    } else if (sortType == 1) {
+      return item2.name.compareTo(item1.name);
+    } else if (sortType == 2) {
+      return item1.dateTime.compareTo(item2.dateTime);
+    } else if (sortType == 3) {
+      return item2.dateTime.compareTo(item1.dateTime);
+    }
+    return -1;
   }
 
   void createCategory(
@@ -57,5 +85,13 @@ class HomeController {
     Catalogo.instance.addCategory(
         Categoria(name, description, Catalogo.instance.categorias.length));
     filterMedia();
+  }
+
+  void changeSortType() {
+    if (sortType == 1) {
+      sortType = 0;
+    } else {
+      sortType = 1;
+    }
   }
 }
