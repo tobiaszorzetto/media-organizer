@@ -2,15 +2,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:media_organizer/models/media_model.dart';
 
-class HomeController {
+class HomeController extends ChangeNotifier {
   static HomeController instance = HomeController();
 
+  TextEditingController descriptionController = TextEditingController();
+
   String overview = '';
-  double ratingApi = 0;
+  ValueNotifier<double> ratingApi = ValueNotifier(0);
 
   List<MediaType> visibleMedias = [];
   int sortType = 0;
-  double ratingObserved = 0;
 
   bool filterMenuvisible = false;
   RangeValues filterRatingsObservados = RangeValues(0, 10);
@@ -99,7 +100,7 @@ class HomeController {
       print(response);
       HomeController.instance.overview =
           (response.data["results"][0]["overview"]).toString();
-      ratingApi = response.data["results"][0]["vote_average"].toDouble();
+      ratingApi.value = response.data["results"][0]["vote_average"].toDouble();
     } else {
       print(response);
     }
@@ -111,15 +112,24 @@ class HomeController {
       required String imagem,
       required dynamic categoriasEscolhidas,
       required MediaType tipoSelected}) async {
-    await pegarApi(name);
     Catalogo.instance.createMedia(
         name: name,
-        rating: ratingApi,
+        rating: ratingApi.value,
         description: HomeController.instance.overview,
         categoriasEscolhidas: categoriasEscolhidas,
         imagem: imagem,
         tipoSelected: tipoSelected);
 
     HomeController.instance.filterMedia();
+  }
+
+  autoComplete(String name) async {
+    await pegarApi(name);
+    descriptionController.text = overview;
+    notifyListeners();
+  }
+
+  double getRating() {
+    return ratingApi.value;
   }
 }

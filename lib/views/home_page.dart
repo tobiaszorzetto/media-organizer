@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:io';
+
 import 'package:context_menus/context_menus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -162,7 +164,8 @@ class _HomePageState extends State<HomePage> {
             children: [
               FloatingActionButton(
                 onPressed: (() => setState(() {
-                      HomeController.instance.ratingObserved = 0;
+                      HomeController.instance.ratingApi.value = 0;
+                      HomeController.instance.descriptionController.text = '';
                       openAddMediaDialog();
                     })),
                 child: Icon(Icons.add),
@@ -317,10 +320,10 @@ class _HomePageState extends State<HomePage> {
 
   openAddMediaDialog() {
     String name = '';
-    String description = '';
+    String description = HomeController.instance.overview;
     String imagem = '';
     MediaType tipoSelected = Catalogo.instance.medias[0];
-
+    double rating = HomeController.instance.ratingApi.value;
     List<bool> categoriasEscolhidas =
         Catalogo.instance.categorias.map((e) => false).toList();
 
@@ -335,8 +338,8 @@ class _HomePageState extends State<HomePage> {
             width: MediaQuery.of(context).size.width / 4,
             child: StatefulBuilder(
               builder: (context, setState) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                return ListView(
+                  //crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DropdownButton<MediaType>(
                       value: tipoSelected,
@@ -359,8 +362,13 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     TextField(
+                      controller: HomeController.instance.descriptionController,
                       onChanged: (value) {
-                        description = value;
+                        setState(
+                          () {
+                            HomeController.instance.overview = value;
+                          },
+                        );
                       },
                       decoration: InputDecoration(
                         label: Text("descrição da midia"),
@@ -368,16 +376,21 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Text('Avaliação'),
                     SizedBox(
-                      child: Slider(
-                        value: HomeController.instance.ratingObserved,
-                        max: 10,
-                        divisions: 20,
-                        label:
-                            HomeController.instance.ratingObserved.toString(),
-                        onChanged: ((value) => setState(() {
-                              HomeController.instance.ratingObserved = value;
-                            })),
-                      ),
+                      child: ValueListenableBuilder<double>(
+                          valueListenable: HomeController.instance.ratingApi,
+                          builder: (context, ratingValue, _) {
+                            return Slider(
+                              value: HomeController.instance.ratingApi.value,
+                              max: 10,
+                              divisions: 20,
+                              label: HomeController.instance.ratingApi.value
+                                  .toString(),
+                              onChanged: ((value) => setState(() {
+                                    HomeController.instance.ratingApi.value =
+                                        value;
+                                  })),
+                            );
+                          }),
                     ),
                     TextField(
                       onChanged: (value) {
@@ -387,21 +400,28 @@ class _HomePageState extends State<HomePage> {
                         label: Text("link de imagem (opcional)"),
                       ),
                     ),
+                    TextButton(
+                        onPressed: (() => setState(() {
+                              HomeController.instance.autoComplete(name);
+                            })),
+                        child: Text("Auto-complete")),
                     Expanded(
                       child: Card(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: Catalogo.instance.category_count,
-                          itemBuilder: ((context, index) {
-                            return CheckboxListTile(
-                              value: categoriasEscolhidas[index],
-                              title: Text(
-                                  Catalogo.instance.categorias[index].name),
-                              onChanged: (value) => setState(() {
-                                categoriasEscolhidas[index] = value!;
-                              }),
-                            );
-                          }),
+                        child: SizedBox(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: Catalogo.instance.category_count,
+                            itemBuilder: ((context, index) {
+                              return CheckboxListTile(
+                                value: categoriasEscolhidas[index],
+                                title: Text(
+                                    Catalogo.instance.categorias[index].name),
+                                onChanged: (value) => setState(() {
+                                  categoriasEscolhidas[index] = value!;
+                                }),
+                              );
+                            }),
+                          ),
                         ),
                       ),
                     ),
