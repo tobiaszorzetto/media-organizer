@@ -1,8 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:media_organizer/models/media_model.dart';
 
 class HomeController {
   static HomeController instance = HomeController();
+
+  String overview = '';
+  double ratingApi = 0;
 
   List<MediaType> visibleMedias = [];
   int sortType = 0;
@@ -85,5 +89,37 @@ class HomeController {
     Catalogo.instance.addCategory(
         Categoria(name, description, Catalogo.instance.categorias.length));
     filterMedia();
+  }
+
+  pegarApi(String movie) async {
+    var dio = Dio();
+    var response = await dio.get(
+        "https://api.themoviedb.org/3/search/movie?api_key=0e74149306746790179d66dcb245cdfe&query==$movie");
+    if (response.statusCode == 200) {
+      print(response);
+      HomeController.instance.overview =
+          (response.data["results"][0]["overview"]).toString();
+      ratingApi = response.data["results"][0]["vote_average"].toDouble();
+    } else {
+      print(response);
+    }
+  }
+
+  createMedia(
+      {required String name,
+      String description = '',
+      required String imagem,
+      required dynamic categoriasEscolhidas,
+      required MediaType tipoSelected}) async {
+    await pegarApi(name);
+    Catalogo.instance.createMedia(
+        name: name,
+        rating: ratingApi,
+        description: HomeController.instance.overview,
+        categoriasEscolhidas: categoriasEscolhidas,
+        imagem: imagem,
+        tipoSelected: tipoSelected);
+
+    HomeController.instance.filterMedia();
   }
 }

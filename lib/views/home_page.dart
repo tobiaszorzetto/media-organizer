@@ -101,11 +101,7 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                TextButton(
-                    onPressed: () {
-                      pegarApi();
-                    },
-                    child: Text('Mídias')),
+                TextButton(onPressed: () {}, child: Text('Mídias')),
                 Card(
                   color: Color.fromARGB(255, 232, 243, 251),
                   child: ListView.builder(
@@ -123,17 +119,6 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
-  }
-
-  void pegarApi(String movie) async {
-    var dio = Dio();
-    var response = await dio.get(
-        "https://api.themoviedb.org/3/search/movie?api_key=0e74149306746790179d66dcb245cdfe&query==$movie");
-    if (response.statusCode == 200) {
-      print(response);
-    } else {
-      print(response);
-    }
   }
 
   Widget buildMediaTypeTile(MediaType mediaType) {
@@ -428,15 +413,11 @@ class _HomePageState extends State<HomePage> {
           actions: [
             TextButton(
                 onPressed: (() => setState(() {
-                      Catalogo.instance.createMedia(
+                      HomeController.instance.createMedia(
                           name: name,
-                          rating: HomeController.instance.ratingObserved,
-                          description: description,
-                          categoriasEscolhidas: categoriasEscolhidas,
                           imagem: imagem,
+                          categoriasEscolhidas: categoriasEscolhidas,
                           tipoSelected: tipoSelected);
-
-                      HomeController.instance.filterMedia();
                       Navigator.of(context).pop();
                     })),
                 child: Text("Pronto")),
