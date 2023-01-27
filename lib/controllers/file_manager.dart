@@ -15,13 +15,17 @@ class FileManager {
 
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
-
     return directory.path;
   }
 
   Future<File> get _jsonFile async {
     final path = await _localPath;
     return File('$path/info.json');
+  }
+
+  Future<File> get _jsonCategoryFile async {
+    final path = await _localPath;
+    return File('$path/infoCategory.json');
   }
 
   readTextFile() async {
@@ -55,6 +59,10 @@ class FileManager {
                 Catalogo.instance.oldestDateTime.millisecondsSinceEpoch) {
               Catalogo.instance.oldestDateTime = media.dateTime;
             }
+            if (media.dateTime.millisecondsSinceEpoch >
+                Catalogo.instance.newestDateTime.millisecondsSinceEpoch) {
+              Catalogo.instance.newestDateTime = media.dateTime;
+            }
           }
         }
       } catch (e) {
@@ -70,5 +78,31 @@ class FileManager {
     var jsonMedias =
         jsonEncode(Catalogo.instance.medias.map((e) => e.toJson()).toList());
     await file.writeAsString(jsonMedias);
+  }
+
+  Future<List<Categoria>> readJsonCategoryFile() async {
+    String fileContent = 'Arquivos Categorias';
+    File file = await _jsonCategoryFile;
+    List<Categoria> categoriasIniciais = [];
+    if (await file.exists()) {
+      try {
+        fileContent = await file.readAsString();
+        var categoryMap = jsonDecode(fileContent);
+        for (dynamic jsonCategory in categoryMap) {
+          categoriasIniciais.add(Categoria.fromJson(jsonCategory));
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+
+    return categoriasIniciais;
+  }
+
+  Future writeJsonCategoryFile() async {
+    File file = await _jsonCategoryFile;
+    var jsonCategories = jsonEncode(
+        Catalogo.instance.categorias.map((e) => e.toJson()).toList());
+    await file.writeAsString(jsonCategories);
   }
 }
