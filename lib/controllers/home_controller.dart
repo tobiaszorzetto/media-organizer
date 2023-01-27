@@ -9,6 +9,7 @@ class HomeController extends ChangeNotifier {
 
   String overview = '';
   ValueNotifier<double> ratingApi = ValueNotifier(0);
+  bool exit = true;
 
   List<MediaType> visibleMedias = [];
   int sortType = 0;
@@ -97,13 +98,13 @@ class HomeController extends ChangeNotifier {
     var response = await dio.get(
         "https://api.themoviedb.org/3/search/movie?api_key=0e74149306746790179d66dcb245cdfe&query==$movie");
     if (response.statusCode == 200) {
-      print(response);
-      HomeController.instance.overview =
-          (response.data["results"][0]["overview"]).toString();
-      ratingApi.value = response.data["results"][0]["vote_average"].toDouble();
-    } else {
-      print(response);
-    }
+      try {
+        HomeController.instance.overview =
+            (response.data["results"][0]["overview"]).toString();
+        ratingApi.value =
+            response.data["results"][0]["vote_average"].toDouble();
+      } catch (e) {}
+    } else {}
   }
 
   createMedia(

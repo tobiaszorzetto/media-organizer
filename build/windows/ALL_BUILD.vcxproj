@@ -152,9 +152,17 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>{AB862B8B-DF54-3F74-B175-63D5E4DC068E}</Project>
       <Name>media_organizer</Name>
     </ProjectReference>
+    <ProjectReference Include="C:\Users\tobia_mzp3yru\Documents\GitHub\media-organizer\build\windows\plugins\screen_retriever\screen_retriever_plugin.vcxproj">
+      <Project>{9546B01F-BF8C-3364-AE9F-7381BDAE6482}</Project>
+      <Name>screen_retriever_plugin</Name>
+    </ProjectReference>
     <ProjectReference Include="C:\Users\tobia_mzp3yru\Documents\GitHub\media-organizer\build\windows\plugins\url_launcher_windows\url_launcher_windows_plugin.vcxproj">
       <Project>{483C8602-0278-3C1D-BF1F-DA98822E4DF7}</Project>
       <Name>url_launcher_windows_plugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\tobia_mzp3yru\Documents\GitHub\media-organizer\build\windows\plugins\window_manager\window_manager_plugin.vcxproj">
+      <Project>{5F2BF1AD-8CBD-37A8-BCD1-C840F148AAE1}</Project>
+      <Name>window_manager_plugin</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

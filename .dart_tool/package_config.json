@@ -212,6 +212,12 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "screen_retriever",
+      "rootUri": "file:///C:/Users/tobia_mzp3yru/AppData/Local/Pub/Cache/hosted/pub.dev/screen_retriever-0.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///C:/flutter_windows_3.3.10-stable/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -326,6 +332,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "window_manager",
+      "rootUri": "file:///C:/Users/tobia_mzp3yru/AppData/Local/Pub/Cache/hosted/pub.dev/window_manager-0.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "xdg_directories",
       "rootUri": "file:///C:/Users/tobia_mzp3yru/AppData/Local/Pub/Cache/hosted/pub.dev/xdg_directories-0.2.0+3",
       "packageUri": "lib/",
@@ -338,7 +350,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-01-27T00:58:22.391931Z",
+  "generated": "2023-01-27T14:49:38.748436Z",
   "generator": "pub",
   "generatorVersion": "3.0.0-153.0.dev"
 }

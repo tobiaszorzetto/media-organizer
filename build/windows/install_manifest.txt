@@ -1,6 +1,8 @@
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/icudtl.dat
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/flutter_windows.dll
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/screen_retriever_plugin.dll
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/url_launcher_windows_plugin.dll
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/window_manager_plugin.dll
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/AssetManifest.bin
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/AssetManifest.json
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/FontManifest.json
@@ -9,5 +11,9 @@ C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Deb
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/NOTICES
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/NOTICES.Z
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/packages/window_manager/images/ic_chrome_close.png
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/packages/window_manager/images/ic_chrome_maximize.png
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/packages/window_manager/images/ic_chrome_minimize.png
+C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/packages/window_manager/images/ic_chrome_unmaximize.png
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/shaders/ink_sparkle.frag
 C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets/version.json

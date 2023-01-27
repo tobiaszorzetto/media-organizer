@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:media_organizer/controllers/file_manager.dart';
 import 'package:media_organizer/models/media_model.dart';
+import 'package:window_manager/window_manager.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -20,7 +21,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WindowListener {
   @override
   Widget build(BuildContext context) {
     setState(() {
@@ -47,16 +48,59 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           actions: [],
         ),
-        body: SizedBox(
-          height: double.infinity,
-          width: double.infinity,
-          child: Column(
-            children: [
-              searchingRow(),
-              contentRow(),
-            ],
+        body: WillPopScope(
+          onWillPop: _willPopCallback,
+          child: SizedBox(
+            height: double.infinity,
+            width: double.infinity,
+            child: ListView(
+              children: [
+                searchingRow(),
+                contentRow(),
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Future<bool> _willPopCallback() async {
+    openExitDialog();
+    return HomeController.instance.exit;
+  }
+
+  openExitDialog() {
+    String name = '';
+    String description = '';
+
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Adicionar Categoria"),
+        content: Text("Deseja salvar suas alterações?"),
+        actions: [
+          TextButton(
+              onPressed: (() => setState(() {
+                    HomeController.instance.exit = true;
+                    FileManager.instance.writeJsonCategoryFile();
+                    FileManager.instance.writeJsonFile();
+                    Navigator.of(context).pop();
+                  })),
+              child: Text("Salvar")),
+          TextButton(
+              onPressed: (() => setState(() {
+                    HomeController.instance.exit = true;
+                    Navigator.of(context).pop();
+                  })),
+              child: Text("Discartar mudancas e sair")),
+          TextButton(
+              onPressed: (() => setState(() {
+                    HomeController.instance.exit = false;
+                    Navigator.of(context).pop();
+                  })),
+              child: Text("Cancelar")),
+        ],
       ),
     );
   }
@@ -68,34 +112,37 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextButton(
-                    onPressed: () {
-                      openAddCategoryDialog();
-                    },
-                    child: Text('Categorias')),
-                Card(
-                  color: Color.fromARGB(255, 232, 243, 251),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: Catalogo.instance.category_count,
-                    itemBuilder: ((context, index) {
-                      return CheckboxListTile(
-                        value: Catalogo.instance.categoriasFiltradas[index],
-                        title: Text(Catalogo.instance.categorias[index].name),
-                        subtitle: Text(
-                            Catalogo.instance.categorias[index].description),
-                        onChanged: (value) => setState(() {
-                          Catalogo.instance.categoriasFiltradas[index] = value!;
-                          HomeController.instance.filterMedia();
-                        }),
-                      );
-                    }),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        openAddCategoryDialog();
+                      },
+                      child: Text('Categorias')),
+                  Card(
+                    color: Color.fromARGB(255, 232, 243, 251),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: Catalogo.instance.category_count,
+                      itemBuilder: ((context, index) {
+                        return CheckboxListTile(
+                          value: Catalogo.instance.categoriasFiltradas[index],
+                          title: Text(Catalogo.instance.categorias[index].name),
+                          subtitle: Text(
+                              Catalogo.instance.categorias[index].description),
+                          onChanged: (value) => setState(() {
+                            Catalogo.instance.categoriasFiltradas[index] =
+                                value!;
+                            HomeController.instance.filterMedia();
+                          }),
+                        );
+                      }),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -353,13 +400,27 @@ class _HomePageState extends State<HomePage> {
                             tipoSelected = value!;
                           })),
                     ),
-                    TextField(
-                      onChanged: (value) => setState(() {
-                        name = value;
-                      }),
-                      decoration: InputDecoration(
-                        label: Text("nome da midia"),
-                      ),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: TextField(
+                            onChanged: (value) => setState(() {
+                              name = value;
+                            }),
+                            decoration: InputDecoration(
+                              label: Text("nome da midia"),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: TextButton(
+                              onPressed: (() => setState(() {
+                                    HomeController.instance.autoComplete(name);
+                                  })),
+                              child: Text("Auto-complete")),
+                        ),
+                      ],
                     ),
                     TextField(
                       controller: HomeController.instance.descriptionController,
@@ -400,11 +461,10 @@ class _HomePageState extends State<HomePage> {
                         label: Text("link de imagem (opcional)"),
                       ),
                     ),
-                    TextButton(
-                        onPressed: (() => setState(() {
-                              HomeController.instance.autoComplete(name);
-                            })),
-                        child: Text("Auto-complete")),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Text("categorias"),
                     Expanded(
                       child: Card(
                         child: SizedBox(
