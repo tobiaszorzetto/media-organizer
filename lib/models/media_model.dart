@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:media_organizer/controllers/file_manager.dart';
+import 'package:media_organizer/controllers/home_controller.dart';
 
 class MediaModel {
   final String name;
@@ -75,6 +76,7 @@ class Catalogo {
   int media_count = 0;
   int category_count = 0;
   DateTime oldestDateTime = DateTime.now();
+  DateTime newestDateTime = DateTime.fromMicrosecondsSinceEpoch(0);
   static Catalogo instance = Catalogo();
 
   List<MediaType> medias = [
@@ -106,8 +108,18 @@ class Catalogo {
       } finally {}
     }
 
+    if (HomeController.instance.filterDateObservados.start >
+        newestDateTime.millisecondsSinceEpoch) {
+      newestDateTime = DateTime.now();
+      HomeController.instance.filterDateObservados = RangeValues(
+          HomeController.instance.filterDateObservados.start,
+          DateTime.now().millisecondsSinceEpoch.toDouble());
+    } else {
+      newestDateTime = DateTime.now();
+    }
+
     var media = MediaModel(
-        name, rating, description, categorias, image, DateTime.now());
+        name, rating, description, categorias, image, newestDateTime);
     Catalogo.instance.addMedia(media, tipoSelected);
   }
 

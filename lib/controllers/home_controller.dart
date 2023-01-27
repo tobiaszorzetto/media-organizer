@@ -1,12 +1,18 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:media_organizer/models/media_model.dart';
 
-class HomeController {
+class HomeController extends ChangeNotifier {
   static HomeController instance = HomeController();
+
+  TextEditingController descriptionController = TextEditingController();
+
+  String overview = '';
+  ValueNotifier<double> ratingApi = ValueNotifier(0);
+  bool exit = true;
 
   List<MediaType> visibleMedias = [];
   int sortType = 0;
-  double ratingObserved = 0;
 
   bool filterMenuvisible = false;
   RangeValues filterRatingsObservados = RangeValues(0, 10);
@@ -87,11 +93,44 @@ class HomeController {
     filterMedia();
   }
 
-  void changeSortType() {
-    if (sortType == 1) {
-      sortType = 0;
-    } else {
-      sortType = 1;
-    }
+  pegarApi(String movie) async {
+    var dio = Dio();
+    var response = await dio.get(
+        "https://api.themoviedb.org/3/search/movie?api_key=0e74149306746790179d66dcb245cdfe&query==$movie");
+    if (response.statusCode == 200) {
+      try {
+        HomeController.instance.overview =
+            (response.data["results"][0]["overview"]).toString();
+        ratingApi.value =
+            response.data["results"][0]["vote_average"].toDouble();
+      } catch (e) {}
+    } else {}
+  }
+
+  createMedia(
+      {required String name,
+      String description = '',
+      required String imagem,
+      required dynamic categoriasEscolhidas,
+      required MediaType tipoSelected}) async {
+    Catalogo.instance.createMedia(
+        name: name,
+        rating: ratingApi.value,
+        description: HomeController.instance.overview,
+        categoriasEscolhidas: categoriasEscolhidas,
+        imagem: imagem,
+        tipoSelected: tipoSelected);
+
+    HomeController.instance.filterMedia();
+  }
+
+  autoComplete(String name) async {
+    await pegarApi(name);
+    descriptionController.text = overview;
+    notifyListeners();
+  }
+
+  double getRating() {
+    return ratingApi.value;
   }
 }

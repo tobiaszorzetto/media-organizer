@@ -15,7 +15,6 @@ class FileManager {
 
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
-
     return directory.path;
   }
 
@@ -59,6 +58,10 @@ class FileManager {
             if (media.dateTime.millisecondsSinceEpoch <
                 Catalogo.instance.oldestDateTime.millisecondsSinceEpoch) {
               Catalogo.instance.oldestDateTime = media.dateTime;
+            }
+            if (media.dateTime.millisecondsSinceEpoch >
+                Catalogo.instance.newestDateTime.millisecondsSinceEpoch) {
+              Catalogo.instance.newestDateTime = media.dateTime;
             }
           }
         }
