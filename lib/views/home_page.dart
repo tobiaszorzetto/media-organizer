@@ -1,12 +1,17 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:context_menus/context_menus.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:media_organizer/controllers/file_manager.dart';
 import 'package:media_organizer/models/media_model.dart';
 
 import '../controllers/home_controller.dart';
+
+import 'dart:convert' as convert;
+
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   @override
@@ -96,7 +101,11 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                TextButton(onPressed: () {}, child: Text('Mídias')),
+                TextButton(
+                    onPressed: () {
+                      pegarApi();
+                    },
+                    child: Text('Mídias')),
                 Card(
                   color: Color.fromARGB(255, 232, 243, 251),
                   child: ListView.builder(
@@ -114,6 +123,17 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  void pegarApi(String movie) async {
+    var dio = Dio();
+    var response = await dio.get(
+        "https://api.themoviedb.org/3/search/movie?api_key=0e74149306746790179d66dcb245cdfe&query==$movie");
+    if (response.statusCode == 200) {
+      print(response);
+    } else {
+      print(response);
+    }
   }
 
   Widget buildMediaTypeTile(MediaType mediaType) {
@@ -294,8 +314,9 @@ class _HomePageState extends State<HomePage> {
                             .instance.filterDateObservados.start
                             .toInt())
                         .toString(),
-                    HomeController.instance.filterDateObservados.end
-                        .round()
+                    DateTime.fromMillisecondsSinceEpoch(HomeController
+                            .instance.filterDateObservados.end
+                            .toInt())
                         .toString()),
                 onChanged: ((value) => setState(() {
                       HomeController.instance.filterDateObservados = value;
