@@ -39,6 +39,9 @@ dependencies:
   flutter_simple_treeview: ^3.0.1
   path_provider: ^2.0.11
   context_menus: ^1.0.2
+  http: ^0.13.5
+  dio: ^4.0.6
+  tmdb_api: ^2.1.4
 
 dev_dependencies:
   flutter_test:

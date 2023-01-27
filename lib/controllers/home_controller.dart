@@ -86,12 +86,4 @@ class HomeController {
         Categoria(name, description, Catalogo.instance.categorias.length));
     filterMedia();
   }
-
-  void changeSortType() {
-    if (sortType == 1) {
-      sortType = 0;
-    } else {
-      sortType = 1;
-    }
-  }
 }
