@@ -361,6 +361,15 @@ class _HomePageState extends State<HomePage> with WindowListener {
             ],
           ),
         ),
+        Card(
+          child: CheckboxListTile(
+            value: HomeController.instance.filterShowOnlyConsumed,
+            title: Text("Filter only consumed medias"),
+            onChanged: (value) => setState(() {
+              HomeController.instance.filterShowOnlyConsumed = value!;
+            }),
+          ),
+        ),
       ],
     );
   }

@@ -16,6 +16,7 @@ class HomeController extends ChangeNotifier {
   int sortType = 0;
 
   bool filterMenuvisible = false;
+  bool filterShowOnlyConsumed = true;
   RangeValues filterRatingsObservados = RangeValues(0, 10);
   RangeValues filterDateObservados = RangeValues(
       Catalogo.instance.oldestDateTime.millisecondsSinceEpoch.toDouble(),
@@ -41,6 +42,10 @@ class HomeController extends ChangeNotifier {
       confirmados.add(MediaType(tipoMedia.name, tipoMedia.id));
       confirmados[tipoMedia.id].medias =
           Catalogo.instance.medias[tipoMedia.id].medias.where((media) {
+        if (filterShowOnlyConsumed &&
+            media.dateTimeConsumed.millisecondsSinceEpoch == 0) {
+          return false;
+        }
         if (media.rating < filterRatingsObservados.start.round() ||
             media.rating > filterRatingsObservados.end.round()) {
           return false;
