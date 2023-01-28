@@ -10,11 +10,13 @@ class HomeController extends ChangeNotifier {
   String overview = '';
   ValueNotifier<double> ratingApi = ValueNotifier(0);
   bool exit = true;
+  bool consumed = true;
 
   List<MediaType> visibleMedias = [];
   int sortType = 0;
 
   bool filterMenuvisible = false;
+  bool filterShowOnlyConsumed = true;
   RangeValues filterRatingsObservados = RangeValues(0, 10);
   RangeValues filterDateObservados = RangeValues(
       Catalogo.instance.oldestDateTime.millisecondsSinceEpoch.toDouble(),
@@ -40,6 +42,10 @@ class HomeController extends ChangeNotifier {
       confirmados.add(MediaType(tipoMedia.name, tipoMedia.id));
       confirmados[tipoMedia.id].medias =
           Catalogo.instance.medias[tipoMedia.id].medias.where((media) {
+        if (filterShowOnlyConsumed &&
+            media.dateTimeConsumed.millisecondsSinceEpoch == 0) {
+          return false;
+        }
         if (media.rating < filterRatingsObservados.start.round() ||
             media.rating > filterRatingsObservados.end.round()) {
           return false;
@@ -113,13 +119,19 @@ class HomeController extends ChangeNotifier {
       required String imagem,
       required dynamic categoriasEscolhidas,
       required MediaType tipoSelected}) async {
+    DateTime dateTimeConsumed = DateTime.fromMillisecondsSinceEpoch(0);
+    if (consumed) {
+      dateTimeConsumed = DateTime.now();
+    }
+
     Catalogo.instance.createMedia(
         name: name,
         rating: ratingApi.value,
         description: HomeController.instance.overview,
         categoriasEscolhidas: categoriasEscolhidas,
         imagem: imagem,
-        tipoSelected: tipoSelected);
+        tipoSelected: tipoSelected,
+        dateTimeConsumed: dateTimeConsumed);
 
     HomeController.instance.filterMedia();
   }
