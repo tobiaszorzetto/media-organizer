@@ -10,6 +10,7 @@ class HomeController extends ChangeNotifier {
   String overview = '';
   ValueNotifier<double> ratingApi = ValueNotifier(0);
   bool exit = true;
+  bool consumed = true;
 
   List<MediaType> visibleMedias = [];
   int sortType = 0;
@@ -113,13 +114,19 @@ class HomeController extends ChangeNotifier {
       required String imagem,
       required dynamic categoriasEscolhidas,
       required MediaType tipoSelected}) async {
+    DateTime dateTimeConsumed = DateTime.fromMillisecondsSinceEpoch(0);
+    if (consumed) {
+      dateTimeConsumed = DateTime.now();
+    }
+
     Catalogo.instance.createMedia(
         name: name,
         rating: ratingApi.value,
         description: HomeController.instance.overview,
         categoriasEscolhidas: categoriasEscolhidas,
         imagem: imagem,
-        tipoSelected: tipoSelected);
+        tipoSelected: tipoSelected,
+        dateTimeConsumed: dateTimeConsumed);
 
     HomeController.instance.filterMedia();
   }

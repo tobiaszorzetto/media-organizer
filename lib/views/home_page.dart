@@ -435,6 +435,13 @@ class _HomePageState extends State<HomePage> with WindowListener {
                         label: Text("descrição da midia"),
                       ),
                     ),
+                    CheckboxListTile(
+                      title: Text("Já consumido"),
+                      value: HomeController.instance.consumed,
+                      onChanged: (value) => setState(() {
+                        HomeController.instance.consumed = value!;
+                      }),
+                    ),
                     Text('Avaliação'),
                     SizedBox(
                       child: ValueListenableBuilder<double>(
@@ -465,23 +472,21 @@ class _HomePageState extends State<HomePage> with WindowListener {
                       height: 40,
                     ),
                     Text("categorias"),
-                    Expanded(
-                      child: Card(
-                        child: SizedBox(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: Catalogo.instance.category_count,
-                            itemBuilder: ((context, index) {
-                              return CheckboxListTile(
-                                value: categoriasEscolhidas[index],
-                                title: Text(
-                                    Catalogo.instance.categorias[index].name),
-                                onChanged: (value) => setState(() {
-                                  categoriasEscolhidas[index] = value!;
-                                }),
-                              );
-                            }),
-                          ),
+                    Card(
+                      child: SizedBox(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: Catalogo.instance.category_count,
+                          itemBuilder: ((context, index) {
+                            return CheckboxListTile(
+                              value: categoriasEscolhidas[index],
+                              title: Text(
+                                  Catalogo.instance.categorias[index].name),
+                              onChanged: (value) => setState(() {
+                                categoriasEscolhidas[index] = value!;
+                              }),
+                            );
+                          }),
                         ),
                       ),
                     ),
