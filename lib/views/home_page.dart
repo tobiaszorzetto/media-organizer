@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:context_menus/context_menus.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:media_organizer/controllers/file_manager.dart';
 import 'package:media_organizer/models/media_model.dart';
@@ -184,6 +183,10 @@ class _HomePageState extends State<HomePage> with WindowListener {
         ContextMenuButtonConfig("Excluir mídia",
             onPressed: () => setState(() {
                   Catalogo.instance.deleteMedia(media, mediaType.id);
+                })),
+        ContextMenuButtonConfig("Editar mídia",
+            onPressed: () => setState(() {
+                  openEditMediaDialog(media);
                 })),
       ]),
       child: ListTile(
@@ -512,6 +515,128 @@ class _HomePageState extends State<HomePage> with WindowListener {
                           imagem: imagem,
                           categoriasEscolhidas: categoriasEscolhidas,
                           tipoSelected: tipoSelected);
+                      Navigator.of(context).pop();
+                    })),
+                child: Text("Pronto")),
+          ],
+        ),
+      ),
+    );
+  }
+
+  openEditMediaDialog(MediaModel media) {
+    String name = media.name;
+    String description = media.description;
+    double rating = media.rating;
+
+    bool consumed;
+    if (media.dateTimeConsumed.millisecondsSinceEpoch == 0) {
+      consumed = false;
+    } else {
+      consumed = true;
+    }
+    bool wasConsumed = consumed;
+
+    List<bool> categoriasEscolhidas =
+        Catalogo.instance.categorias.map((e) => false).toList();
+    for (Categoria cat in media.categorias) {
+      categoriasEscolhidas[cat.id] = true;
+    }
+
+    return showDialog(
+      context: context,
+      builder: (context) => SizedBox(
+        child: AlertDialog(
+          insetPadding: EdgeInsets.all(100),
+          title: Text("Editar midia"),
+          content: Container(
+            height: MediaQuery.of(context).size.height / 2,
+            width: MediaQuery.of(context).size.width / 4,
+            child: StatefulBuilder(
+              builder: (context, setState) {
+                return ListView(
+                  //crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      initialValue: name,
+                      onChanged: (value) => setState(() {
+                        name = value;
+                      }),
+                      decoration: InputDecoration(
+                        label: Text("nome da midia"),
+                      ),
+                    ),
+                    TextFormField(
+                      initialValue: description,
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            description = value;
+                          },
+                        );
+                      },
+                      decoration: InputDecoration(
+                        label: Text("descrição da midia"),
+                      ),
+                    ),
+                    CheckboxListTile(
+                      title: Text("Já consumido"),
+                      value: consumed,
+                      onChanged: (value) => setState(() {
+                        consumed = value!;
+                      }),
+                    ),
+                    Text('Avaliação'),
+                    SizedBox(
+                      child: Slider(
+                        value: rating,
+                        max: 10,
+                        divisions: 20,
+                        label: rating.toString(),
+                        onChanged: ((value) => setState(() {
+                              rating = value;
+                            })),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Text("categorias"),
+                    Card(
+                      child: SizedBox(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: Catalogo.instance.category_count,
+                          itemBuilder: ((context, index) {
+                            return CheckboxListTile(
+                              value: categoriasEscolhidas[index],
+                              title: Text(
+                                  Catalogo.instance.categorias[index].name),
+                              onChanged: (value) => setState(() {
+                                categoriasEscolhidas[index] = value!;
+                              }),
+                            );
+                          }),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+                onPressed: (() => setState(() {
+                      HomeController.instance.editMedia(
+                          media,
+                          name,
+                          description,
+                          rating,
+                          categoriasEscolhidas,
+                          consumed,
+                          wasConsumed);
+
                       Navigator.of(context).pop();
                     })),
                 child: Text("Pronto")),
