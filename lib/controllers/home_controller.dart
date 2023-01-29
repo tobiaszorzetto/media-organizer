@@ -145,4 +145,28 @@ class HomeController extends ChangeNotifier {
   double getRating() {
     return ratingApi.value;
   }
+
+  void editMedia(
+      MediaModel media,
+      String name,
+      String description,
+      double rating,
+      List<bool> categoriasEscolhidas,
+      bool consumed,
+      bool wasConsumed) {
+    media.name = name;
+    media.description = description;
+    media.rating = rating;
+    media.categorias = [];
+    for (int i = 0; i < categoriasEscolhidas.length; i++) {
+      if (categoriasEscolhidas[i]) {
+        media.categorias.add(Catalogo.instance.categorias[i]);
+      }
+    }
+    if (consumed && !wasConsumed) {
+      media.dateTimeConsumed = DateTime.now();
+    } else if (!consumed && wasConsumed) {
+      media.dateTimeConsumed = DateTime.fromMillisecondsSinceEpoch(0);
+    }
+  }
 }
