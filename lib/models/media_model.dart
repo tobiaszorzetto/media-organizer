@@ -3,13 +3,13 @@ import 'package:media_organizer/controllers/file_manager.dart';
 import 'package:media_organizer/controllers/home_controller.dart';
 
 class MediaModel {
-  final String name;
-  final double rating;
-  final String description;
-  final List<Categoria> categorias;
+  String name;
+  double rating;
+  String description;
+  List<Categoria> categorias;
   final Widget? image;
   final DateTime dateTime;
-  final DateTime dateTimeConsumed;
+  DateTime dateTimeConsumed;
 
   MediaModel(this.name, this.rating, this.description, this.categorias,
       this.image, this.dateTime, this.dateTimeConsumed);
