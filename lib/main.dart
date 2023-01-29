@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:media_organizer/models/media_model.dart';
 import 'package:media_organizer/views/home_page.dart';
+import 'package:media_organizer/views/statistics_page.dart';
 
 void main() {
   syncCatalogo();
@@ -19,6 +20,7 @@ class AppWidget extends StatelessWidget {
       theme: ThemeData.fallback(),
       routes: {
         '/': ((context) => HomePage()),
+        '/statistics': ((context) => StatisticsPage()),
       },
     );
   }

@@ -40,6 +40,13 @@ class _HomePageState extends State<HomePage> with WindowListener {
                   FileManager.instance.writeJsonCategoryFile();
                   FileManager.instance.writeJsonFile();
                 }),
+              ),
+              ListTile(
+                title: Text("Statistics"),
+                leading: Icon(Icons.graphic_eq),
+                onTap: () => setState(() {
+                  Navigator.of(context).popAndPushNamed("/statistics");
+                }),
               )
             ],
           ),
