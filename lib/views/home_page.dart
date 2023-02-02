@@ -436,7 +436,8 @@ class _HomePageState extends State<HomePage> with WindowListener {
                         Expanded(
                           child: TextButton(
                               onPressed: (() => setState(() {
-                                    HomeController.instance.autoComplete(name);
+                                    HomeController.instance
+                                        .autoComplete(name, tipoSelected.id);
                                   })),
                               child: Text("Auto-complete")),
                         ),

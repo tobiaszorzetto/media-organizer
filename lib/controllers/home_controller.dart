@@ -99,10 +99,16 @@ class HomeController extends ChangeNotifier {
     filterMedia();
   }
 
-  pegarApi(String movie) async {
+  pegarApi(String media, int typeId) async {
     var dio = Dio();
-    var response = await dio.get(
-        "https://api.themoviedb.org/3/search/movie?api_key=0e74149306746790179d66dcb245cdfe&query==$movie");
+    var response;
+    if (typeId == 0) {
+      response = await dio.get(
+          "https://api.themoviedb.org/3/search/movie?api_key=0e74149306746790179d66dcb245cdfe&query==$media");
+    } else {
+      response = await dio.get(
+          "https://api.themoviedb.org/3/search/tv?api_key=0e74149306746790179d66dcb245cdfe&query=$media");
+    }
     if (response.statusCode == 200) {
       try {
         HomeController.instance.overview =
@@ -136,8 +142,8 @@ class HomeController extends ChangeNotifier {
     HomeController.instance.filterMedia();
   }
 
-  autoComplete(String name) async {
-    await pegarApi(name);
+  autoComplete(String name, int typeId) async {
+    await pegarApi(name, typeId);
     descriptionController.text = overview;
     notifyListeners();
   }
