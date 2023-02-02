@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> with WindowListener {
                       },
                       child: Text('Categorias')),
                   Card(
-                    color: Color.fromARGB(255, 232, 243, 251),
+                    //color: Color.fromARGB(255, 232, 243, 251),
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: Catalogo.instance.category_count,
@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> with WindowListener {
               children: [
                 TextButton(onPressed: () {}, child: Text('Mídias')),
                 Card(
-                  color: Color.fromARGB(255, 232, 243, 251),
+                  //color: Color.fromARGB(255, 232, 243, 251),
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: HomeController.instance.visibleMedias.length,

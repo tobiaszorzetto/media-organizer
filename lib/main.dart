@@ -17,7 +17,7 @@ class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.fallback(),
+      theme: ThemeData.dark(),
       routes: {
         '/': ((context) => HomePage()),
         '/statistics': ((context) => StatisticsPage()),

@@ -81,101 +81,171 @@ class _StatisticsPage extends State<StatisticsPage> {
               builder: (context, setState) {
                 return ListView(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: TextField(
-                        decoration:
-                            const InputDecoration(labelText: 'Goal name'),
-                        onChanged: (value) => setState(() {
-                          StatisticsController.instance.selectedName = value;
-                        }),
-                      ),
-                    ),
-                    DropdownButton<MediaType>(
-                      value: tipoSelected,
-                      items: Catalogo.instance.medias
-                          .map((e) => DropdownMenuItem<MediaType>(
-                                value: e,
-                                child: Text(e.name),
-                              ))
-                          .toList(),
-                      onChanged: ((value) => setState(() {
-                            tipoSelected = value!;
-                            StatisticsController.instance.filterMediasGoal();
-                            StatisticsController.instance.mediasEscolhidas =
-                                StatisticsController.instance
-                                    .mediasViewed[tipoSelected.id].medias
-                                    .map((e) => false)
-                                    .toList();
-                          })),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: Catalogo.instance.category_count,
-                          itemBuilder: ((context, index) {
-                            return CheckboxListTile(
-                              value: StatisticsController
-                                  .instance.categoriasEscolhidas[index],
-                              title: Text(
-                                  Catalogo.instance.categorias[index].name),
-                              onChanged: (value) => setState(() {
-                                StatisticsController.instance
-                                    .categoriasEscolhidas[index] = value!;
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: TextField(
+                            decoration:
+                                const InputDecoration(labelText: 'Goal name'),
+                            onChanged: (value) => setState(() {
+                              StatisticsController.instance.selectedName =
+                                  value;
+                            }),
+                          ),
+                        ),
+                        DropdownButton<MediaType>(
+                          value: tipoSelected,
+                          items: Catalogo.instance.medias
+                              .map((e) => DropdownMenuItem<MediaType>(
+                                    value: e,
+                                    child: Text(e.name),
+                                  ))
+                              .toList(),
+                          onChanged: ((value) => setState(() {
+                                tipoSelected = value!;
                                 StatisticsController.instance
                                     .filterMediasGoal();
                                 StatisticsController.instance.mediasEscolhidas =
-                                    StatisticsController
-                                        .instance.mediasViewed[0].medias
+                                    StatisticsController.instance
+                                        .mediasViewed[tipoSelected.id].medias
                                         .map((e) => false)
                                         .toList();
-                              }),
-                            );
-                          }),
+                              })),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Card(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: StatisticsController.instance
-                              .mediasViewed[tipoSelected.id].medias.length,
-                          itemBuilder: ((context, index) {
-                            return CheckboxListTile(
-                              value: StatisticsController
-                                  .instance.mediasEscolhidas[index],
-                              title: Text(StatisticsController
-                                  .instance
-                                  .mediasViewed[tipoSelected.id]
-                                  .medias[index]
-                                  .name),
-                              onChanged: (value) => setState(() {
-                                StatisticsController
-                                    .instance.mediasEscolhidas[index] = value!;
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: Catalogo.instance.category_count,
+                              itemBuilder: ((context, index) {
+                                return CheckboxListTile(
+                                  value: StatisticsController
+                                      .instance.categoriasEscolhidas[index],
+                                  title: Text(
+                                      Catalogo.instance.categorias[index].name),
+                                  onChanged: (value) => setState(() {
+                                    StatisticsController.instance
+                                        .categoriasEscolhidas[index] = value!;
+                                    StatisticsController.instance
+                                        .filterMediasGoal();
+                                    StatisticsController
+                                            .instance.mediasEscolhidas =
+                                        StatisticsController
+                                            .instance.mediasViewed[0].medias
+                                            .map((e) => false)
+                                            .toList();
+                                  }),
+                                );
                               }),
-                            );
-                          }),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: SpinBox(
-                        value: 10,
-                        readOnly: true,
-                        decoration:
-                            const InputDecoration(labelText: 'Goal number'),
-                      ),
-                    ),
-                    SfDateRangePicker(
-                      onSelectionChanged: (args) => setState(() {
-                        StatisticsController.instance.selectedDate = args.value;
-                      }),
-                      selectionMode: DateRangePickerSelectionMode.single,
+                        Card(
+                          child: Column(children: [
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: CheckboxListTile(
+                                title: const Text(
+                                    "Select medias related to your goal"),
+                                value:
+                                    StatisticsController.instance.selectMedias,
+                                onChanged: (value) => setState(() {
+                                  StatisticsController.instance.selectMedias =
+                                      value!;
+                                }),
+                              ),
+                            ),
+                            Visibility(
+                              visible:
+                                  !StatisticsController.instance.selectMedias,
+                              child: Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: SpinBox(
+                                  value: StatisticsController
+                                      .instance.quantMediasGoal
+                                      .toDouble(),
+                                  readOnly: true,
+                                  decoration: const InputDecoration(
+                                      labelText: 'Goal number'),
+                                  onChanged: (value) => setState(() {
+                                    StatisticsController.instance
+                                        .updateQuantMediasGoal(value.toInt());
+                                  }),
+                                ),
+                              ),
+                            ),
+                            Visibility(
+                              visible:
+                                  StatisticsController.instance.selectMedias,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Card(
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: StatisticsController
+                                        .instance
+                                        .mediasViewed[tipoSelected.id]
+                                        .medias
+                                        .length,
+                                    itemBuilder: ((context, index) {
+                                      return CheckboxListTile(
+                                        value: StatisticsController
+                                            .instance.mediasEscolhidas[index],
+                                        title: Text(StatisticsController
+                                            .instance
+                                            .mediasViewed[tipoSelected.id]
+                                            .medias[index]
+                                            .name),
+                                        onChanged: (value) => setState(() {
+                                          StatisticsController.instance
+                                              .mediasEscolhidas[index] = value!;
+                                          StatisticsController.instance
+                                              .updateQuantMediasGoal(
+                                                  StatisticsController.instance
+                                                      .quantMediasGoal);
+                                        }),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]),
+                        ),
+                        Card(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: CheckboxListTile(
+                                  title: const Text(
+                                      "Include deadline for your goal"),
+                                  value:
+                                      StatisticsController.instance.hasDeadline,
+                                  onChanged: (value) => setState(() {
+                                    StatisticsController.instance.hasDeadline =
+                                        value!;
+                                  }),
+                                ),
+                              ),
+                              Visibility(
+                                visible:
+                                    StatisticsController.instance.hasDeadline,
+                                child: SfDateRangePicker(
+                                  onSelectionChanged: (args) => setState(() {
+                                    StatisticsController.instance.selectedDate =
+                                        args.value;
+                                  }),
+                                  selectionMode:
+                                      DateRangePickerSelectionMode.single,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   ],
                 );

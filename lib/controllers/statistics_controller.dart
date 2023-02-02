@@ -14,6 +14,10 @@ class StatisticsController extends ChangeNotifier {
   List<bool> mediasEscolhidas =
       Catalogo.instance.medias[0].medias.map((e) => false).toList();
 
+  bool hasDeadline = false;
+  bool selectMedias = false;
+  int quantMediasGoal = 10;
+
   void filterMediasGoal() {
     final List<MediaType> confirmados = [];
 
@@ -41,5 +45,14 @@ class StatisticsController extends ChangeNotifier {
       }
     }
     return false;
+  }
+
+  void updateQuantMediasGoal(int value) {
+    if (selectMedias) {
+      quantMediasGoal =
+          mediasEscolhidas.where((element) => element = true).length;
+    } else {
+      quantMediasGoal = value;
+    }
   }
 }

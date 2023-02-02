@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:media_organizer/controllers/file_manager.dart';
 import 'package:media_organizer/controllers/home_controller.dart';
@@ -81,6 +82,7 @@ class Catalogo {
   DateTime oldestDateTime = DateTime.now();
   DateTime newestDateTime = DateTime.fromMicrosecondsSinceEpoch(0);
   static Catalogo instance = Catalogo();
+  List<Goal> goals = [];
 
   List<MediaType> medias = [
     MediaType("Filmes", 0),
@@ -175,5 +177,40 @@ class Catalogo {
       }
     }
     return false;
+  }
+}
+
+class Goal {
+  final String name;
+  final List<Categoria> categorias;
+  final int quantMedias;
+  final List<MediaModel> selectedMedias;
+  final DateTime deadline;
+
+  Goal(this.name, this.categorias, this.quantMedias, this.selectedMedias,
+      this.deadline);
+
+  Map toJson() => {
+        'name': name,
+        'categorias': categorias.map((e) => e.toJson()).toList(),
+        'quantMedias': quantMedias,
+        'selectedMedias': selectedMedias.map((e) => e.toJson()).toList(),
+        'deadline': deadline.millisecondsSinceEpoch,
+      };
+
+  factory Goal.fromJson(dynamic json) {
+    var categoriasObjsJson = json['categorias'] as List;
+    List<Categoria> _categorias =
+        categoriasObjsJson.map((e) => Categoria.fromJson(e)).toList();
+    var selectedMediasObjsJson = json['selectedMedias'] as List;
+    List<MediaModel> _selectedMedias =
+        selectedMediasObjsJson.map((e) => MediaModel.fromJson(e)).toList();
+    return Goal(
+      json['name'],
+      _categorias,
+      json['quantMedias'],
+      _selectedMedias,
+      DateTime.fromMillisecondsSinceEpoch(json['deadline']),
+    );
   }
 }
