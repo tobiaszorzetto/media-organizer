@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> with WindowListener {
                 onTap: () => setState(() {
                   FileManager.instance.writeJsonCategoryFile();
                   FileManager.instance.writeJsonFile();
+                  FileManager.instance.writeJsonGoalsFile();
                 }),
               ),
               ListTile(

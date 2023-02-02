@@ -16,7 +16,9 @@ class _StatisticsPage extends State<StatisticsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Goals & Statistics"),
+      ),
       body: Container(
         padding: const EdgeInsets.all(20),
         child: Row(
@@ -37,6 +39,20 @@ class _StatisticsPage extends State<StatisticsPage> {
                                 child: Icon(Icons.add)))
                       ],
                     ),
+                    SizedBox(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: Catalogo.instance.goals.length,
+                          itemBuilder: ((context, index) {
+                            return ListTile(
+                              title: Text(Catalogo.instance.goals[index].name),
+                              onTap: () => setState(() {
+                                StatisticsController.instance
+                                    .showGoal(Catalogo.instance.goals[index]);
+                              }),
+                            );
+                          })),
+                    )
                   ],
                 ),
               ),
@@ -44,14 +60,24 @@ class _StatisticsPage extends State<StatisticsPage> {
             Expanded(
               flex: 2,
               child: Card(
-                child: SfCartesianChart(
-                  title: ChartTitle(text: "Goal"),
+                child: Column(
+                  children: [
+                    showGraph(),
+                    Text(StatisticsController.instance.showedGoalName)
+                  ],
                 ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  SfCartesianChart showGraph() {
+    return SfCartesianChart(
+      title: ChartTitle(text: "Goal"),
+      //series: ChartSeries(),
     );
   }
 
@@ -253,7 +279,11 @@ class _StatisticsPage extends State<StatisticsPage> {
             ),
           ),
           actions: [
-            TextButton(onPressed: (() => setState(() {})), child: Text("Ok")),
+            TextButton(
+                onPressed: (() => setState(() {
+                      StatisticsController.instance.createGoal(tipoSelected.id);
+                    })),
+                child: Text("Ok")),
           ],
         ),
       ),

@@ -18,6 +18,12 @@ class StatisticsController extends ChangeNotifier {
   bool selectMedias = false;
   int quantMediasGoal = 10;
 
+  String showedGoalName = '';
+  List<Categoria> showedCategorias = [];
+  List<MediaModel> showedMedias = [];
+  int showedQuant = 0;
+  DateTime showedDeadline = DateTime.now();
+
   void filterMediasGoal() {
     final List<MediaType> confirmados = [];
 
@@ -54,5 +60,29 @@ class StatisticsController extends ChangeNotifier {
     } else {
       quantMediasGoal = value;
     }
+  }
+
+  void createGoal(int typeId) {
+    List<Categoria> categorias = Catalogo.instance.categorias
+        .where((element) => categoriasEscolhidas[element.id])
+        .toList();
+    List<MediaModel> selected = [];
+    for (int i = 0; i < mediasEscolhidas.length; i++) {
+      if (mediasEscolhidas[i]) {
+        selected.add(mediasViewed[typeId].medias[i]);
+      }
+    }
+    var newGoal =
+        Goal(selectedName, categorias, quantMediasGoal, selected, selectedDate);
+
+    Catalogo.instance.goals.add(newGoal);
+  }
+
+  void showGoal(Goal goal) {
+    showedGoalName = goal.name;
+    showedCategorias = goal.categorias;
+    showedMedias = goal.selectedMedias;
+    showedQuant = goal.quantMedias;
+    showedDeadline = goal.deadline;
   }
 }

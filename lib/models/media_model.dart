@@ -133,6 +133,10 @@ class Catalogo {
     medias = await FileManager.instance.readJsonFile();
   }
 
+  pegarGoalsJson() async {
+    goals = await FileManager.instance.readJsonGoalsFile();
+  }
+
   pegarCategoriasJson() async {
     categorias = await FileManager.instance.readJsonCategoryFile();
     category_count = categorias.length;
@@ -200,16 +204,16 @@ class Goal {
 
   factory Goal.fromJson(dynamic json) {
     var categoriasObjsJson = json['categorias'] as List;
-    List<Categoria> _categorias =
+    List<Categoria> categorias =
         categoriasObjsJson.map((e) => Categoria.fromJson(e)).toList();
     var selectedMediasObjsJson = json['selectedMedias'] as List;
-    List<MediaModel> _selectedMedias =
+    List<MediaModel> selectedMedias =
         selectedMediasObjsJson.map((e) => MediaModel.fromJson(e)).toList();
     return Goal(
       json['name'],
-      _categorias,
+      categorias,
       json['quantMedias'],
-      _selectedMedias,
+      selectedMedias,
       DateTime.fromMillisecondsSinceEpoch(json['deadline']),
     );
   }

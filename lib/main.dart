@@ -10,6 +10,7 @@ void main() {
 syncCatalogo() async {
   await Catalogo.instance.pegarMediasJson();
   await Catalogo.instance.pegarCategoriasJson();
+  await Catalogo.instance.pegarGoalsJson();
   runApp(AppWidget());
 }
 
