@@ -190,9 +190,10 @@ class Goal {
   final int quantMedias;
   final List<MediaModel> selectedMedias;
   final DateTime deadline;
+  final DateTime creationDate;
 
   Goal(this.name, this.categorias, this.quantMedias, this.selectedMedias,
-      this.deadline);
+      this.deadline, this.creationDate);
 
   Map toJson() => {
         'name': name,
@@ -200,6 +201,7 @@ class Goal {
         'quantMedias': quantMedias,
         'selectedMedias': selectedMedias.map((e) => e.toJson()).toList(),
         'deadline': deadline.millisecondsSinceEpoch,
+        'creationDate': creationDate.millisecondsSinceEpoch,
       };
 
   factory Goal.fromJson(dynamic json) {
@@ -209,12 +211,17 @@ class Goal {
     var selectedMediasObjsJson = json['selectedMedias'] as List;
     List<MediaModel> selectedMedias =
         selectedMediasObjsJson.map((e) => MediaModel.fromJson(e)).toList();
-    return Goal(
+    DateTime criacao =
+        DateTime.fromMillisecondsSinceEpoch(json['creationDate']);
+    var goal = Goal(
       json['name'],
       categorias,
       json['quantMedias'],
       selectedMedias,
       DateTime.fromMillisecondsSinceEpoch(json['deadline']),
+      criacao,
     );
+    print(goal);
+    return goal;
   }
 }

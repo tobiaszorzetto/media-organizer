@@ -75,9 +75,18 @@ class _StatisticsPage extends State<StatisticsPage> {
   }
 
   SfCartesianChart showGraph() {
+    setState(() {
+      StatisticsController.instance.showGraph();
+    });
     return SfCartesianChart(
       title: ChartTitle(text: "Goal"),
-      //series: ChartSeries(),
+      series: [
+        LineSeries(
+          dataSource: StatisticsController.instance.chartData,
+          xValueMapper: (ChartData ch, _) => ch.xAxis,
+          yValueMapper: (ChartData ch, _) => ch.yAxis,
+        )
+      ],
     );
   }
 

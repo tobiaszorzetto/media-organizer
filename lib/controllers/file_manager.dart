@@ -120,7 +120,9 @@ class FileManager {
         fileContent = await file.readAsString();
         var goalsMap = jsonDecode(fileContent);
         for (dynamic jsonGoal in goalsMap) {
-          initialGoals.add(Goal.fromJson(jsonGoal));
+          Goal goal = Goal.fromJson(jsonGoal);
+          print(goal);
+          initialGoals.add(goal);
         }
       } catch (e) {
         print(e);

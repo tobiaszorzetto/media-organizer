@@ -23,6 +23,8 @@ class StatisticsController extends ChangeNotifier {
   List<MediaModel> showedMedias = [];
   int showedQuant = 0;
   DateTime showedDeadline = DateTime.now();
+  DateTime showedCreationDate = DateTime.now();
+  List<ChartData> chartData = [];
 
   void filterMediasGoal() {
     final List<MediaType> confirmados = [];
@@ -72,8 +74,8 @@ class StatisticsController extends ChangeNotifier {
         selected.add(mediasViewed[typeId].medias[i]);
       }
     }
-    var newGoal =
-        Goal(selectedName, categorias, quantMediasGoal, selected, selectedDate);
+    var newGoal = Goal(selectedName, categorias, quantMediasGoal, selected,
+        selectedDate, DateTime.now());
 
     Catalogo.instance.goals.add(newGoal);
   }
@@ -84,5 +86,63 @@ class StatisticsController extends ChangeNotifier {
     showedMedias = goal.selectedMedias;
     showedQuant = goal.quantMedias;
     showedDeadline = goal.deadline;
+    showedCreationDate = goal.creationDate;
   }
+
+  void showGraph() {
+    chartData = [];
+    int quant = 0;
+    List<MediaModel> showedMediasSorted = showedMedias
+        .where((element) => element.dateTimeConsumed.millisecondsSinceEpoch > 0)
+        .toList();
+    showedMediasSorted.sort((item1, item2) => _compare(item1, item2));
+    quant = 0;
+    bool addedGoalCreation = false;
+    for (MediaModel media in showedMediasSorted) {
+      if (media.dateTimeConsumed.millisecondsSinceEpoch <
+              showedCreationDate.millisecondsSinceEpoch &&
+          !addedGoalCreation) {
+        addedGoalCreation = true;
+        chartData.add(ChartData(
+            showedGoalName,
+            showedCreationDate.millisecondsSinceEpoch.toDouble(),
+            quant.toDouble() + 1));
+      }
+      quant++;
+      chartData.add(ChartData(
+          media.name,
+          media.dateTimeConsumed.millisecondsSinceEpoch.toDouble(),
+          quant.toDouble()));
+    }
+    if (!addedGoalCreation) {
+      chartData.add(ChartData(showedGoalName,
+          showedCreationDate.millisecondsSinceEpoch.toDouble(), 0));
+    }
+    chartData.add(ChartData("agora",
+        DateTime.now().millisecondsSinceEpoch.toDouble(), quant.toDouble()));
+    chartData.sort((item1, item2) => _compare2(item1, item2));
+  }
+
+  _compare2(ChartData item1, ChartData item2) {
+    if (item1.xAxis > item2.xAxis) {
+      return 1;
+    }
+    return 0;
+  }
+}
+
+_compare(MediaModel item1, MediaModel item2) {
+  if (item1.dateTimeConsumed.millisecondsSinceEpoch >
+      item2.dateTimeConsumed.millisecondsSinceEpoch) {
+    return 1;
+  }
+  return 0;
+}
+
+class ChartData {
+  final String name;
+  final double xAxis;
+  final double yAxis;
+
+  ChartData(this.name, this.xAxis, this.yAxis);
 }
