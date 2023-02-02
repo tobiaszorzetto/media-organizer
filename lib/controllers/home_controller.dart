@@ -105,18 +105,42 @@ class HomeController extends ChangeNotifier {
     if (typeId == 0) {
       response = await dio.get(
           "https://api.themoviedb.org/3/search/movie?api_key=0e74149306746790179d66dcb245cdfe&query==$media");
-    } else {
+      if (response.statusCode == 200) {
+        try {
+          HomeController.instance.overview =
+              (response.data["results"][0]["overview"]).toString();
+          ratingApi.value =
+              response.data["results"][0]["vote_average"].toDouble();
+        } catch (e) {}
+      } else {}
+    } else if (typeId == 1) {
       response = await dio.get(
           "https://api.themoviedb.org/3/search/tv?api_key=0e74149306746790179d66dcb245cdfe&query=$media");
+      if (response.statusCode == 200) {
+        try {
+          HomeController.instance.overview =
+              (response.data["results"][0]["overview"]).toString();
+          ratingApi.value =
+              response.data["results"][0]["vote_average"].toDouble();
+        } catch (e) {}
+      } else {}
+    } else {
+      response = await dio.get(
+          "https://www.googleapis.com/books/v1/volumes?q=flowers+intitle:$media&key=AIzaSyA3W9uwFxT6ADb8BGT6y2P1idOH8x2qrjA");
+      if (response.statusCode == 200) {
+        try {
+          print(response.data["items"][0]["volumeInfo"]);
+          HomeController.instance.overview = (response.data["items"][0]
+                  ["volumeInfo"]["description"])
+              .toString();
+          ratingApi.value = response.data["items"][0]["volumeInfo"]
+                      ["averageRating"]
+                  .toDouble() *
+              2;
+          print(ratingApi.value);
+        } catch (e) {}
+      } else {}
     }
-    if (response.statusCode == 200) {
-      try {
-        HomeController.instance.overview =
-            (response.data["results"][0]["overview"]).toString();
-        ratingApi.value =
-            response.data["results"][0]["vote_average"].toDouble();
-      } catch (e) {}
-    } else {}
   }
 
   createMedia(

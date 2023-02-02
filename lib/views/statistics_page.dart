@@ -62,8 +62,10 @@ class _StatisticsPage extends State<StatisticsPage> {
               child: Card(
                 child: Column(
                   children: [
-                    showGraph(),
-                    Text(StatisticsController.instance.showedGoalName)
+                    Expanded(flex: 2, child: showGraph()),
+                    Expanded(
+                        child:
+                            Text(StatisticsController.instance.showedGoalName))
                   ],
                 ),
               ),
