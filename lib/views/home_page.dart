@@ -39,6 +39,14 @@ class _HomePageState extends State<HomePage> with WindowListener {
                 onTap: () => setState(() {
                   FileManager.instance.writeJsonCategoryFile();
                   FileManager.instance.writeJsonFile();
+                  FileManager.instance.writeJsonGoalsFile();
+                }),
+              ),
+              ListTile(
+                title: Text("Statistics"),
+                leading: Icon(Icons.graphic_eq),
+                onTap: () => setState(() {
+                  Navigator.of(context).popAndPushNamed("/statistics");
                 }),
               )
             ],
@@ -121,7 +129,7 @@ class _HomePageState extends State<HomePage> with WindowListener {
                       },
                       child: Text('Categorias')),
                   Card(
-                    color: Color.fromARGB(255, 232, 243, 251),
+                    //color: Color.fromARGB(255, 232, 243, 251),
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: Catalogo.instance.category_count,
@@ -151,7 +159,7 @@ class _HomePageState extends State<HomePage> with WindowListener {
               children: [
                 TextButton(onPressed: () {}, child: Text('Mídias')),
                 Card(
-                  color: Color.fromARGB(255, 232, 243, 251),
+                  //color: Color.fromARGB(255, 232, 243, 251),
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: HomeController.instance.visibleMedias.length,
@@ -428,7 +436,8 @@ class _HomePageState extends State<HomePage> with WindowListener {
                         Expanded(
                           child: TextButton(
                               onPressed: (() => setState(() {
-                                    HomeController.instance.autoComplete(name);
+                                    HomeController.instance
+                                        .autoComplete(name, tipoSelected.id);
                                   })),
                               child: Text("Auto-complete")),
                         ),

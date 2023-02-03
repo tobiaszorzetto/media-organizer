@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:media_organizer/controllers/file_manager.dart';
 import 'package:media_organizer/controllers/home_controller.dart';
@@ -81,6 +82,7 @@ class Catalogo {
   DateTime oldestDateTime = DateTime.now();
   DateTime newestDateTime = DateTime.fromMicrosecondsSinceEpoch(0);
   static Catalogo instance = Catalogo();
+  List<Goal> goals = [];
 
   List<MediaType> medias = [
     MediaType("Filmes", 0),
@@ -131,6 +133,10 @@ class Catalogo {
     medias = await FileManager.instance.readJsonFile();
   }
 
+  pegarGoalsJson() async {
+    goals = await FileManager.instance.readJsonGoalsFile();
+  }
+
   pegarCategoriasJson() async {
     categorias = await FileManager.instance.readJsonCategoryFile();
     category_count = categorias.length;
@@ -175,5 +181,50 @@ class Catalogo {
       }
     }
     return false;
+  }
+}
+
+class Goal {
+  final String name;
+  final List<Categoria> categorias;
+  final int quantMedias;
+  final List<MediaModel> selectedMedias;
+  final DateTime deadline;
+  final int typeId;
+  final DateTime creationDate;
+
+  Goal(this.name, this.categorias, this.quantMedias, this.selectedMedias,
+      this.deadline, this.creationDate, this.typeId);
+
+  Map toJson() => {
+        'name': name,
+        'categorias': categorias.map((e) => e.toJson()).toList(),
+        'quantMedias': quantMedias,
+        'selectedMedias': selectedMedias.map((e) => e.toJson()).toList(),
+        'deadline': deadline.millisecondsSinceEpoch,
+        'creationDate': creationDate.millisecondsSinceEpoch,
+        'typeId': typeId,
+      };
+
+  factory Goal.fromJson(dynamic json) {
+    var categoriasObjsJson = json['categorias'] as List;
+    List<Categoria> categorias =
+        categoriasObjsJson.map((e) => Categoria.fromJson(e)).toList();
+    var selectedMediasObjsJson = json['selectedMedias'] as List;
+    List<MediaModel> selectedMedias =
+        selectedMediasObjsJson.map((e) => MediaModel.fromJson(e)).toList();
+    DateTime criacao =
+        DateTime.fromMillisecondsSinceEpoch(json['creationDate']);
+    var goal = Goal(
+      json['name'],
+      categorias,
+      json['quantMedias'],
+      selectedMedias,
+      DateTime.fromMillisecondsSinceEpoch(json['deadline']),
+      criacao,
+      json["typeId"],
+    );
+    print(goal);
+    return goal;
   }
 }
