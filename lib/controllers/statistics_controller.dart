@@ -24,6 +24,7 @@ class StatisticsController extends ChangeNotifier {
   int showedQuant = 0;
   DateTime showedDeadline = DateTime.now();
   DateTime showedCreationDate = DateTime.now();
+  int showedTypeId = 0;
   List<ChartData> chartData = [];
 
   void filterMediasGoal() {
@@ -75,7 +76,7 @@ class StatisticsController extends ChangeNotifier {
       }
     }
     var newGoal = Goal(selectedName, categorias, quantMediasGoal, selected,
-        selectedDate, DateTime.now());
+        selectedDate, DateTime.now(), typeId);
 
     Catalogo.instance.goals.add(newGoal);
   }
@@ -87,44 +88,63 @@ class StatisticsController extends ChangeNotifier {
     showedQuant = goal.quantMedias;
     showedDeadline = goal.deadline;
     showedCreationDate = goal.creationDate;
+    showedTypeId = goal.typeId;
   }
 
   void showGraph() {
     chartData = [];
-    int quant = 0;
-    List<MediaModel> showedMediasSorted = showedMedias
-        .where((element) => element.dateTimeConsumed.millisecondsSinceEpoch > 0)
-        .toList();
+    List<MediaModel> showedMediasSorted;
+    if (showedMedias.isEmpty) {
+      showedMediasSorted = showGraphQuant();
+    } else {
+      showedMediasSorted = showGraphSelectedMedias();
+    }
     showedMediasSorted.sort((item1, item2) => _compare(item1, item2));
     quant = 0;
     bool addedGoalCreation = false;
     for (MediaModel media in showedMediasSorted) {
-      if (media.dateTimeConsumed.millisecondsSinceEpoch <
-              showedCreationDate.millisecondsSinceEpoch &&
+      quant++;
+      if (media.dateTimeConsumed.millisecond < showedCreationDate.millisecond &&
           !addedGoalCreation) {
         addedGoalCreation = true;
-        chartData.add(ChartData(
-            showedGoalName,
-            showedCreationDate.millisecondsSinceEpoch.toDouble(),
-            quant.toDouble() + 1));
+        chartData.add(
+            ChartData(showedGoalName, showedCreationDate, quant.toDouble()));
       }
-      quant++;
-      chartData.add(ChartData(
-          media.name,
-          media.dateTimeConsumed.millisecondsSinceEpoch.toDouble(),
-          quant.toDouble()));
+      chartData
+          .add(ChartData(media.name, media.dateTimeConsumed, quant.toDouble()));
     }
+
     if (!addedGoalCreation) {
-      chartData.add(ChartData(showedGoalName,
-          showedCreationDate.millisecondsSinceEpoch.toDouble(), 0));
+      chartData.add(ChartData(showedGoalName, showedCreationDate, 0));
     }
-    chartData.add(ChartData("agora",
-        DateTime.now().millisecondsSinceEpoch.toDouble(), quant.toDouble()));
+
+    chartData.add(ChartData("agora", DateTime.now(), quant.toDouble()));
     chartData.sort((item1, item2) => _compare2(item1, item2));
   }
 
+  List<MediaModel> showGraphQuant() {
+    var medias = Catalogo.instance.medias[showedTypeId].medias;
+    return medias
+        .where((element) =>
+            (element.categorias
+                    .toSet()
+                    .intersection(showedCategorias.toSet())
+                    .isNotEmpty ||
+                showedCategorias.isEmpty) &&
+            element.dateTimeConsumed.millisecond >
+                showedCreationDate.millisecond)
+        .toList();
+  }
+
+  List<MediaModel> showGraphSelectedMedias() {
+    return showedMedias
+        .where((element) => element.dateTimeConsumed.millisecondsSinceEpoch > 0)
+        .toList();
+  }
+
   _compare2(ChartData item1, ChartData item2) {
-    if (item1.xAxis > item2.xAxis) {
+    if (item1.xAxis.millisecondsSinceEpoch >
+        item2.xAxis.millisecondsSinceEpoch) {
       return 1;
     }
     return 0;
@@ -141,7 +161,7 @@ _compare(MediaModel item1, MediaModel item2) {
 
 class ChartData {
   final String name;
-  final double xAxis;
+  final DateTime xAxis;
   final double yAxis;
 
   ChartData(this.name, this.xAxis, this.yAxis);

@@ -85,7 +85,7 @@ class _StatisticsPage extends State<StatisticsPage> {
       series: [
         LineSeries(
           dataSource: StatisticsController.instance.chartData,
-          xValueMapper: (ChartData ch, _) => ch.xAxis,
+          xValueMapper: (ChartData ch, _) => ch.xAxis.millisecondsSinceEpoch,
           yValueMapper: (ChartData ch, _) => ch.yAxis,
         )
       ],
