@@ -6,7 +6,9 @@ class HomeController extends ChangeNotifier {
   static HomeController instance = HomeController();
 
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController imageLinkController = TextEditingController();
 
+  String imagem = '';
   String overview = '';
   ValueNotifier<double> ratingApi = ValueNotifier(0);
   bool exit = true;
@@ -111,6 +113,8 @@ class HomeController extends ChangeNotifier {
               (response.data["results"][0]["overview"]).toString();
           ratingApi.value =
               response.data["results"][0]["vote_average"].toDouble();
+          HomeController.instance.imagem =
+              "https://image.tmdb.org/t/p/original/${response.data["results"][0]["poster_path"]}";
         } catch (e) {}
       } else {}
     } else if (typeId == 1) {
@@ -122,6 +126,8 @@ class HomeController extends ChangeNotifier {
               (response.data["results"][0]["overview"]).toString();
           ratingApi.value =
               response.data["results"][0]["vote_average"].toDouble();
+          HomeController.instance.imagem =
+              "https://image.tmdb.org/t/p/original/${response.data["results"][0]["poster_path"]}";
         } catch (e) {}
       } else {}
     } else {
@@ -137,7 +143,8 @@ class HomeController extends ChangeNotifier {
                       ["averageRating"]
                   .toDouble() *
               2;
-          print(ratingApi.value);
+          HomeController.instance.imagem = response.data["items"][0]
+              ["volumeInfo"]["imageLinks"]["thumbnail"];
         } catch (e) {}
       } else {}
     }
@@ -146,7 +153,6 @@ class HomeController extends ChangeNotifier {
   createMedia(
       {required String name,
       String description = '',
-      required String imagem,
       required dynamic categoriasEscolhidas,
       required MediaType tipoSelected}) async {
     DateTime dateTimeConsumed = DateTime.fromMillisecondsSinceEpoch(0);
@@ -169,6 +175,7 @@ class HomeController extends ChangeNotifier {
   autoComplete(String name, int typeId) async {
     await pegarApi(name, typeId);
     descriptionController.text = overview;
+    imageLinkController.text = imagem;
     notifyListeners();
   }
 

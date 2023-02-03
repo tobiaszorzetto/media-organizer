@@ -482,8 +482,9 @@ class _HomePageState extends State<HomePage> with WindowListener {
                           }),
                     ),
                     TextField(
+                      controller: HomeController.instance.imageLinkController,
                       onChanged: (value) {
-                        imagem = value;
+                        HomeController.instance.imagem = value;
                       },
                       decoration: InputDecoration(
                         label: Text("link de imagem (opcional)"),
@@ -521,7 +522,6 @@ class _HomePageState extends State<HomePage> with WindowListener {
                 onPressed: (() => setState(() {
                       HomeController.instance.createMedia(
                           name: name,
-                          imagem: imagem,
                           categoriasEscolhidas: categoriasEscolhidas,
                           tipoSelected: tipoSelected);
                       Navigator.of(context).pop();
