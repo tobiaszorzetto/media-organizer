@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:media_organizer/controllers/app_controller.dart';
 import 'package:media_organizer/models/media_model.dart';
 import 'package:media_organizer/views/home_page.dart';
 import 'package:media_organizer/views/statistics_page.dart';
@@ -17,12 +18,16 @@ syncCatalogo() async {
 class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark(),
-      routes: {
-        '/': ((context) => HomePage()),
-        '/statistics': ((context) => StatisticsPage()),
-      },
-    );
+    return AnimatedBuilder(
+        animation: AppController.instance,
+        builder: (context, child) {
+          return MaterialApp(
+            theme: AppController.instance.theme,
+            routes: {
+              '/': ((context) => HomePage()),
+              '/statistics': ((context) => StatisticsPage()),
+            },
+          );
+        });
   }
 }

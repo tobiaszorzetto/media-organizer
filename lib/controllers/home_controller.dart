@@ -135,7 +135,6 @@ class HomeController extends ChangeNotifier {
           "https://www.googleapis.com/books/v1/volumes?q=flowers+intitle:$media&key=AIzaSyA3W9uwFxT6ADb8BGT6y2P1idOH8x2qrjA");
       if (response.statusCode == 200) {
         try {
-          print(response.data["items"][0]["volumeInfo"]);
           HomeController.instance.overview = (response.data["items"][0]
                   ["volumeInfo"]["description"])
               .toString();

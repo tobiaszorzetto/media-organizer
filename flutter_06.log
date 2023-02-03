@@ -1,0 +1,74 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter run
+
+## exception
+
+StdinException: StdinException: Error setting terminal echo mode, OS Error: The handle is invalid.
+, errno = 6
+
+```
+#0      Stdin.echoMode= (dart:io-patch/stdio_patch.dart:85:7)
+#1      AnsiTerminal.singleCharMode= (package:flutter_tools/src/base/terminal.dart:287:13)
+#2      TerminalHandler.setupTerminal (package:flutter_tools/src/resident_runner.dart:1614:15)
+#3      RunCommand.runCommand.<anonymous closure> (package:flutter_tools/src/commands/run.dart:726:15)
+#4      _rootRunUnary (dart:async/zone.dart:1406:47)
+<asynchronous suspension>
+```
+
+## flutter doctor
+
+```
+[32m[✓][39m Flutter (Channel master, 3.7.0-29.0.pre.13, on Microsoft Windows [Version 10.0.22621.1105], locale pt-BR)
+    [32m•[39m Flutter version 3.7.0-29.0.pre.13 on channel master at C:\flutter_windows_3.3.10-stable\flutter
+    [32m•[39m Upstream repository https://github.com/flutter/flutter.git
+    [32m•[39m Framework revision e9ca9cc146 (6 days ago), 2023-01-27 13:36:54 -0800
+    [32m•[39m Engine revision 8567d96993
+    [32m•[39m Dart version 3.0.0 (build 3.0.0-173.0.dev)
+    [32m•[39m DevTools version 2.20.1
+
+[32m[✓][39m Windows Version (Installed version of Windows is version 10 or higher)
+
+[33m[!][39m Android toolchain - develop for Android devices (Android SDK version 33.0.1)
+    [32m•[39m Android SDK at C:\Users\tobia_mzp3yru\AppData\Local\Android\sdk
+    [31m✗[39m cmdline-tools component is missing
+      Run `path/to/sdkmanager --install "cmdline-tools;latest"`
+      See https://developer.android.com/studio/command-line for more details.
+    [31m✗[39m Android license status unknown.
+      Run `flutter doctor --android-licenses` to accept the SDK licenses.
+      See https://flutter.dev/docs/get-started/install/windows#android-setup for more details.
+
+[32m[✓][39m Chrome - develop for the web
+    [32m•[39m Chrome at C:\Program Files\Google\Chrome\Application\chrome.exe
+
+[32m[✓][39m Visual Studio - develop for Windows (Visual Studio Community 2022 17.4.4)
+    [32m•[39m Visual Studio at C:\Program Files\Microsoft Visual Studio\2022\Community
+    [32m•[39m Visual Studio Community 2022 version 17.4.33213.308
+    [32m•[39m Windows 10 SDK version 10.0.22000.0
+
+[33m[!][39m Android Studio (version 2022.1)
+    [32m•[39m Android Studio at C:\Program Files\Android\Android Studio
+    [32m•[39m Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    [32m•[39m Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+    [31m✗[39m Unable to find bundled Java version.
+    [32m•[39m Try updating or re-installing Android Studio.
+
+[32m[✓][39m VS Code (version 1.74.3)
+    [32m•[39m VS Code at C:\Users\tobia_mzp3yru\AppData\Local\Programs\Microsoft VS Code
+    [32m•[39m Flutter extension version 3.58.0
+
+[32m[✓][39m Connected device (3 available)
+    [32m•[39m Windows (desktop) • windows • windows-x64    • Microsoft Windows [Version 10.0.22621.1105]
+    [32m•[39m Chrome (web)      • chrome  • web-javascript • Google Chrome 109.0.5414.120
+    [32m•[39m Edge (web)        • edge    • web-javascript • Microsoft Edge 109.0.1518.70
+
+[32m[✓][39m HTTP Host Availability
+    [32m•[39m All required HTTP hosts are available
+
+[33m![39m Doctor found issues in 2 categories.
+```
