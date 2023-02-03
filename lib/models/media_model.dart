@@ -8,12 +8,22 @@ class MediaModel {
   double rating;
   String description;
   List<Categoria> categorias;
-  final Widget? image;
+  final Widget image;
+  String imageString;
   final DateTime dateTime;
   DateTime dateTimeConsumed;
+  int typeId;
 
-  MediaModel(this.name, this.rating, this.description, this.categorias,
-      this.image, this.dateTime, this.dateTimeConsumed);
+  MediaModel(
+      this.name,
+      this.rating,
+      this.description,
+      this.categorias,
+      this.image,
+      this.imageString,
+      this.dateTime,
+      this.dateTimeConsumed,
+      this.typeId);
 
   Map toJson() => {
         'name': name,
@@ -22,20 +32,35 @@ class MediaModel {
         'categorias': categorias.map((e) => e.toJson()).toList(),
         'datetime': dateTime.millisecondsSinceEpoch,
         'datetimeconsumed': dateTimeConsumed.millisecondsSinceEpoch,
+        'image': imageString,
+        'typeId': typeId,
       };
 
+  static Icon getIcon(int id) {
+    if (id == 0) {
+      return Icon(Icons.movie);
+    } else if (id == 1) {
+      return Icon(Icons.tv);
+    }
+    return Icon(Icons.book);
+  }
+
   factory MediaModel.fromJson(dynamic json) {
+    var icone = MediaModel.getIcon(json['typeId']);
     var categoriasObjsJson = json['categorias'] as List;
     List<Categoria> _categorias =
         categoriasObjsJson.map((e) => Categoria.fromJson(e)).toList();
     return MediaModel(
-        json['name'],
-        json['rating'] as double,
-        json['description'],
-        _categorias,
-        Icon(Icons.movie),
-        DateTime.fromMillisecondsSinceEpoch(json['datetime']),
-        DateTime.fromMillisecondsSinceEpoch(json['datetimeconsumed']));
+      json['name'],
+      json['rating'] as double,
+      json['description'],
+      _categorias,
+      json['image'].toString().isEmpty ? icone : Image.network(json['image']),
+      json['image'],
+      DateTime.fromMillisecondsSinceEpoch(json['datetime']),
+      DateTime.fromMillisecondsSinceEpoch(json['datetimeconsumed']),
+      json['typeId'],
+    );
   }
 }
 
@@ -102,7 +127,7 @@ class Catalogo {
       required MediaType tipoSelected,
       required dateTimeConsumed}) {
     List<Categoria> categorias = [];
-    Widget? image = Icon(Icons.movie_rounded);
+    Widget? image = MediaModel.getIcon(tipoSelected.id);
     for (int i = 0; i < categoriasEscolhidas.length; i++) {
       if (categoriasEscolhidas[i]) {
         categorias.add(Catalogo.instance.categorias[i]);
@@ -124,8 +149,8 @@ class Catalogo {
       newestDateTime = DateTime.now();
     }
 
-    var media = MediaModel(name, rating, description, categorias, image,
-        newestDateTime, dateTimeConsumed);
+    var media = MediaModel(name, rating, description, categorias, image, imagem,
+        newestDateTime, dateTimeConsumed, tipoSelected.id);
     Catalogo.instance.addMedia(media, tipoSelected);
   }
 
