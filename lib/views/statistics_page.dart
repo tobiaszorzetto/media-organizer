@@ -63,9 +63,7 @@ class _StatisticsPage extends State<StatisticsPage> {
                 child: Column(
                   children: [
                     Expanded(flex: 2, child: showGraph()),
-                    Expanded(
-                        child:
-                            Text(StatisticsController.instance.showedGoalName))
+                    Expanded(child: showGoalInfo())
                   ],
                 ),
               ),
@@ -73,6 +71,59 @@ class _StatisticsPage extends State<StatisticsPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget showGoalInfo() {
+    return Card(
+      child: Column(
+        children: [
+          Text(StatisticsController.instance.showedGoalName),
+          Text(
+              "Quantity of medias to complete: ${StatisticsController.instance.mediasInGoal.length}/${StatisticsController.instance.quantMediasGoal}"),
+          Card(
+            elevation: 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Medias included in this goal:"),
+                showListGoal(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget showListGoal() {
+    if (StatisticsController.instance.showedMedias.isEmpty) {
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: StatisticsController.instance.mediasInGoal.length,
+        itemBuilder: ((context, index) {
+          return ListTile(
+            title: Text(StatisticsController.instance.mediasInGoal[index].name),
+          );
+        }),
+      );
+    }
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: StatisticsController.instance.showedMedias.length,
+      itemBuilder: ((context, index) {
+        if (StatisticsController.instance.mediasInGoal
+            .contains(StatisticsController.instance.showedMedias[index])) {
+          return ListTile(
+              trailing: const Icon(Icons.check),
+              title:
+                  Text(StatisticsController.instance.showedMedias[index].name));
+        }
+        return ListTile(
+            trailing: const Icon(Icons.cancel),
+            title:
+                Text(StatisticsController.instance.showedMedias[index].name));
+      }),
     );
   }
 

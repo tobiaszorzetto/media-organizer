@@ -21,6 +21,7 @@ class StatisticsController extends ChangeNotifier {
   String showedGoalName = '';
   List<Categoria> showedCategorias = [];
   List<MediaModel> showedMedias = [];
+  List<MediaModel> mediasInGoal = [];
   int showedQuant = 0;
   DateTime showedDeadline = DateTime.now();
   DateTime showedCreationDate = DateTime.now();
@@ -95,14 +96,14 @@ class StatisticsController extends ChangeNotifier {
     chartData = [];
     List<MediaModel> showedMediasSorted;
     if (showedMedias.isEmpty) {
-      showedMediasSorted = showGraphQuant();
+      showGraphQuant();
     } else {
-      showedMediasSorted = showGraphSelectedMedias();
+      showGraphSelectedMedias();
     }
-    showedMediasSorted.sort((item1, item2) => _compare(item1, item2));
+    mediasInGoal.sort((item1, item2) => _compare(item1, item2));
     quant = 0;
     bool addedGoalCreation = false;
-    for (MediaModel media in showedMediasSorted) {
+    for (MediaModel media in mediasInGoal) {
       quant++;
       if (media.dateTimeConsumed.millisecond < showedCreationDate.millisecond &&
           !addedGoalCreation) {
@@ -122,9 +123,9 @@ class StatisticsController extends ChangeNotifier {
     chartData.sort((item1, item2) => _compare2(item1, item2));
   }
 
-  List<MediaModel> showGraphQuant() {
+  void showGraphQuant() {
     var medias = Catalogo.instance.medias[showedTypeId].medias;
-    return medias
+    mediasInGoal = medias
         .where((element) =>
             (element.categorias
                     .toSet()
@@ -136,8 +137,8 @@ class StatisticsController extends ChangeNotifier {
         .toList();
   }
 
-  List<MediaModel> showGraphSelectedMedias() {
-    return showedMedias
+  void showGraphSelectedMedias() {
+    mediasInGoal = showedMedias
         .where((element) => element.dateTimeConsumed.millisecondsSinceEpoch > 0)
         .toList();
   }
