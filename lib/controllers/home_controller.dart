@@ -10,11 +10,13 @@ class HomeController extends ChangeNotifier {
   String overview = '';
   ValueNotifier<double> ratingApi = ValueNotifier(0);
   bool exit = true;
+  bool consumed = true;
 
   List<MediaType> visibleMedias = [];
   int sortType = 0;
 
   bool filterMenuvisible = false;
+  bool filterShowOnlyConsumed = true;
   RangeValues filterRatingsObservados = RangeValues(0, 10);
   RangeValues filterDateObservados = RangeValues(
       Catalogo.instance.oldestDateTime.millisecondsSinceEpoch.toDouble(),
@@ -40,6 +42,10 @@ class HomeController extends ChangeNotifier {
       confirmados.add(MediaType(tipoMedia.name, tipoMedia.id));
       confirmados[tipoMedia.id].medias =
           Catalogo.instance.medias[tipoMedia.id].medias.where((media) {
+        if (filterShowOnlyConsumed &&
+            media.dateTimeConsumed.millisecondsSinceEpoch == 0) {
+          return false;
+        }
         if (media.rating < filterRatingsObservados.start.round() ||
             media.rating > filterRatingsObservados.end.round()) {
           return false;
@@ -93,18 +99,48 @@ class HomeController extends ChangeNotifier {
     filterMedia();
   }
 
-  pegarApi(String movie) async {
+  pegarApi(String media, int typeId) async {
     var dio = Dio();
-    var response = await dio.get(
-        "https://api.themoviedb.org/3/search/movie?api_key=0e74149306746790179d66dcb245cdfe&query==$movie");
-    if (response.statusCode == 200) {
-      try {
-        HomeController.instance.overview =
-            (response.data["results"][0]["overview"]).toString();
-        ratingApi.value =
-            response.data["results"][0]["vote_average"].toDouble();
-      } catch (e) {}
-    } else {}
+    var response;
+    if (typeId == 0) {
+      response = await dio.get(
+          "https://api.themoviedb.org/3/search/movie?api_key=0e74149306746790179d66dcb245cdfe&query==$media");
+      if (response.statusCode == 200) {
+        try {
+          HomeController.instance.overview =
+              (response.data["results"][0]["overview"]).toString();
+          ratingApi.value =
+              response.data["results"][0]["vote_average"].toDouble();
+        } catch (e) {}
+      } else {}
+    } else if (typeId == 1) {
+      response = await dio.get(
+          "https://api.themoviedb.org/3/search/tv?api_key=0e74149306746790179d66dcb245cdfe&query=$media");
+      if (response.statusCode == 200) {
+        try {
+          HomeController.instance.overview =
+              (response.data["results"][0]["overview"]).toString();
+          ratingApi.value =
+              response.data["results"][0]["vote_average"].toDouble();
+        } catch (e) {}
+      } else {}
+    } else {
+      response = await dio.get(
+          "https://www.googleapis.com/books/v1/volumes?q=flowers+intitle:$media&key=AIzaSyA3W9uwFxT6ADb8BGT6y2P1idOH8x2qrjA");
+      if (response.statusCode == 200) {
+        try {
+          print(response.data["items"][0]["volumeInfo"]);
+          HomeController.instance.overview = (response.data["items"][0]
+                  ["volumeInfo"]["description"])
+              .toString();
+          ratingApi.value = response.data["items"][0]["volumeInfo"]
+                      ["averageRating"]
+                  .toDouble() *
+              2;
+          print(ratingApi.value);
+        } catch (e) {}
+      } else {}
+    }
   }
 
   createMedia(
@@ -113,24 +149,54 @@ class HomeController extends ChangeNotifier {
       required String imagem,
       required dynamic categoriasEscolhidas,
       required MediaType tipoSelected}) async {
+    DateTime dateTimeConsumed = DateTime.fromMillisecondsSinceEpoch(0);
+    if (consumed) {
+      dateTimeConsumed = DateTime.now();
+    }
+
     Catalogo.instance.createMedia(
         name: name,
         rating: ratingApi.value,
         description: HomeController.instance.overview,
         categoriasEscolhidas: categoriasEscolhidas,
         imagem: imagem,
-        tipoSelected: tipoSelected);
+        tipoSelected: tipoSelected,
+        dateTimeConsumed: dateTimeConsumed);
 
     HomeController.instance.filterMedia();
   }
 
-  autoComplete(String name) async {
-    await pegarApi(name);
+  autoComplete(String name, int typeId) async {
+    await pegarApi(name, typeId);
     descriptionController.text = overview;
     notifyListeners();
   }
 
   double getRating() {
     return ratingApi.value;
+  }
+
+  void editMedia(
+      MediaModel media,
+      String name,
+      String description,
+      double rating,
+      List<bool> categoriasEscolhidas,
+      bool consumed,
+      bool wasConsumed) {
+    media.name = name;
+    media.description = description;
+    media.rating = rating;
+    media.categorias = [];
+    for (int i = 0; i < categoriasEscolhidas.length; i++) {
+      if (categoriasEscolhidas[i]) {
+        media.categorias.add(Catalogo.instance.categorias[i]);
+      }
+    }
+    if (consumed && !wasConsumed) {
+      media.dateTimeConsumed = DateTime.now();
+    } else if (!consumed && wasConsumed) {
+      media.dateTimeConsumed = DateTime.fromMillisecondsSinceEpoch(0);
+    }
   }
 }
