@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/windows
+# Install script for directory: D:/GitHub/media-organizer/windows
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,173 +34,173 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/flutter/cmake_install.cmake")
+  include("D:/GitHub/media-organizer/build/windows/flutter/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/cmake_install.cmake")
+  include("D:/GitHub/media-organizer/build/windows/runner/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/plugins/screen_retriever/cmake_install.cmake")
+  include("D:/GitHub/media-organizer/build/windows/plugins/screen_retriever/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/plugins/url_launcher_windows/cmake_install.cmake")
+  include("D:/GitHub/media-organizer/build/windows/plugins/url_launcher_windows/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/plugins/window_manager/cmake_install.cmake")
+  include("D:/GitHub/media-organizer/build/windows/plugins/window_manager/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/media_organizer.exe")
+     "D:/GitHub/media-organizer/build/windows/runner/Debug/media_organizer.exe")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug" TYPE EXECUTABLE FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/media_organizer.exe")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Debug" TYPE EXECUTABLE FILES "D:/GitHub/media-organizer/build/windows/runner/Debug/media_organizer.exe")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile/media_organizer.exe")
+     "D:/GitHub/media-organizer/build/windows/runner/Profile/media_organizer.exe")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile" TYPE EXECUTABLE FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile/media_organizer.exe")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Profile" TYPE EXECUTABLE FILES "D:/GitHub/media-organizer/build/windows/runner/Profile/media_organizer.exe")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release/media_organizer.exe")
+     "D:/GitHub/media-organizer/build/windows/runner/Release/media_organizer.exe")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release" TYPE EXECUTABLE FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release/media_organizer.exe")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Release" TYPE EXECUTABLE FILES "D:/GitHub/media-organizer/build/windows/runner/Release/media_organizer.exe")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/icudtl.dat")
+     "D:/GitHub/media-organizer/build/windows/runner/Debug/data/icudtl.dat")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data" TYPE FILE FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/windows/flutter/ephemeral/icudtl.dat")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Debug/data" TYPE FILE FILES "D:/GitHub/media-organizer/windows/flutter/ephemeral/icudtl.dat")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile/data/icudtl.dat")
+     "D:/GitHub/media-organizer/build/windows/runner/Profile/data/icudtl.dat")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile/data" TYPE FILE FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/windows/flutter/ephemeral/icudtl.dat")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Profile/data" TYPE FILE FILES "D:/GitHub/media-organizer/windows/flutter/ephemeral/icudtl.dat")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release/data/icudtl.dat")
+     "D:/GitHub/media-organizer/build/windows/runner/Release/data/icudtl.dat")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release/data" TYPE FILE FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/windows/flutter/ephemeral/icudtl.dat")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Release/data" TYPE FILE FILES "D:/GitHub/media-organizer/windows/flutter/ephemeral/icudtl.dat")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/flutter_windows.dll")
+     "D:/GitHub/media-organizer/build/windows/runner/Debug/flutter_windows.dll")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug" TYPE FILE FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/windows/flutter/ephemeral/flutter_windows.dll")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Debug" TYPE FILE FILES "D:/GitHub/media-organizer/windows/flutter/ephemeral/flutter_windows.dll")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile/flutter_windows.dll")
+     "D:/GitHub/media-organizer/build/windows/runner/Profile/flutter_windows.dll")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile" TYPE FILE FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/windows/flutter/ephemeral/flutter_windows.dll")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Profile" TYPE FILE FILES "D:/GitHub/media-organizer/windows/flutter/ephemeral/flutter_windows.dll")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release/flutter_windows.dll")
+     "D:/GitHub/media-organizer/build/windows/runner/Release/flutter_windows.dll")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release" TYPE FILE FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/windows/flutter/ephemeral/flutter_windows.dll")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Release" TYPE FILE FILES "D:/GitHub/media-organizer/windows/flutter/ephemeral/flutter_windows.dll")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/screen_retriever_plugin.dll;C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/url_launcher_windows_plugin.dll;C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/window_manager_plugin.dll")
+     "D:/GitHub/media-organizer/build/windows/runner/Debug/screen_retriever_plugin.dll;D:/GitHub/media-organizer/build/windows/runner/Debug/url_launcher_windows_plugin.dll;D:/GitHub/media-organizer/build/windows/runner/Debug/window_manager_plugin.dll")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug" TYPE FILE FILES
-      "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/plugins/screen_retriever/Debug/screen_retriever_plugin.dll"
-      "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/plugins/url_launcher_windows/Debug/url_launcher_windows_plugin.dll"
-      "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/plugins/window_manager/Debug/window_manager_plugin.dll"
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Debug" TYPE FILE FILES
+      "D:/GitHub/media-organizer/build/windows/plugins/screen_retriever/Debug/screen_retriever_plugin.dll"
+      "D:/GitHub/media-organizer/build/windows/plugins/url_launcher_windows/Debug/url_launcher_windows_plugin.dll"
+      "D:/GitHub/media-organizer/build/windows/plugins/window_manager/Debug/window_manager_plugin.dll"
       )
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile/screen_retriever_plugin.dll;C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile/url_launcher_windows_plugin.dll;C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile/window_manager_plugin.dll")
+     "D:/GitHub/media-organizer/build/windows/runner/Profile/screen_retriever_plugin.dll;D:/GitHub/media-organizer/build/windows/runner/Profile/url_launcher_windows_plugin.dll;D:/GitHub/media-organizer/build/windows/runner/Profile/window_manager_plugin.dll")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile" TYPE FILE FILES
-      "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/plugins/screen_retriever/Profile/screen_retriever_plugin.dll"
-      "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/plugins/url_launcher_windows/Profile/url_launcher_windows_plugin.dll"
-      "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/plugins/window_manager/Profile/window_manager_plugin.dll"
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Profile" TYPE FILE FILES
+      "D:/GitHub/media-organizer/build/windows/plugins/screen_retriever/Profile/screen_retriever_plugin.dll"
+      "D:/GitHub/media-organizer/build/windows/plugins/url_launcher_windows/Profile/url_launcher_windows_plugin.dll"
+      "D:/GitHub/media-organizer/build/windows/plugins/window_manager/Profile/window_manager_plugin.dll"
       )
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release/screen_retriever_plugin.dll;C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release/url_launcher_windows_plugin.dll;C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release/window_manager_plugin.dll")
+     "D:/GitHub/media-organizer/build/windows/runner/Release/screen_retriever_plugin.dll;D:/GitHub/media-organizer/build/windows/runner/Release/url_launcher_windows_plugin.dll;D:/GitHub/media-organizer/build/windows/runner/Release/window_manager_plugin.dll")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release" TYPE FILE FILES
-      "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/plugins/screen_retriever/Release/screen_retriever_plugin.dll"
-      "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/plugins/url_launcher_windows/Release/url_launcher_windows_plugin.dll"
-      "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/plugins/window_manager/Release/window_manager_plugin.dll"
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Release" TYPE FILE FILES
+      "D:/GitHub/media-organizer/build/windows/plugins/screen_retriever/Release/screen_retriever_plugin.dll"
+      "D:/GitHub/media-organizer/build/windows/plugins/url_launcher_windows/Release/url_launcher_windows_plugin.dll"
+      "D:/GitHub/media-organizer/build/windows/plugins/window_manager/Release/window_manager_plugin.dll"
       )
   endif()
 endif()
@@ -208,15 +208,15 @@ endif()
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     
-  file(REMOVE_RECURSE "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets")
+  file(REMOVE_RECURSE "D:/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets")
   
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     
-  file(REMOVE_RECURSE "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile/data/flutter_assets")
+  file(REMOVE_RECURSE "D:/GitHub/media-organizer/build/windows/runner/Profile/data/flutter_assets")
   
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     
-  file(REMOVE_RECURSE "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release/data/flutter_assets")
+  file(REMOVE_RECURSE "D:/GitHub/media-organizer/build/windows/runner/Release/data/flutter_assets")
   
   endif()
 endif()
@@ -224,58 +224,58 @@ endif()
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets")
+     "D:/GitHub/media-organizer/build/windows/runner/Debug/data/flutter_assets")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Debug/data" TYPE DIRECTORY FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build//flutter_assets")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Debug/data" TYPE DIRECTORY FILES "D:/GitHub/media-organizer/build//flutter_assets")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile/data/flutter_assets")
+     "D:/GitHub/media-organizer/build/windows/runner/Profile/data/flutter_assets")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile/data" TYPE DIRECTORY FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build//flutter_assets")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Profile/data" TYPE DIRECTORY FILES "D:/GitHub/media-organizer/build//flutter_assets")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release/data/flutter_assets")
+     "D:/GitHub/media-organizer/build/windows/runner/Release/data/flutter_assets")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release/data" TYPE DIRECTORY FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build//flutter_assets")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Release/data" TYPE DIRECTORY FILES "D:/GitHub/media-organizer/build//flutter_assets")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile/data/app.so")
+     "D:/GitHub/media-organizer/build/windows/runner/Profile/data/app.so")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Profile/data" TYPE FILE FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/app.so")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Profile/data" TYPE FILE FILES "D:/GitHub/media-organizer/build/windows/app.so")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release/data/app.so")
+     "D:/GitHub/media-organizer/build/windows/runner/Release/data/app.so")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/runner/Release/data" TYPE FILE FILES "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/app.so")
+    file(INSTALL DESTINATION "D:/GitHub/media-organizer/build/windows/runner/Release/data" TYPE FILE FILES "D:/GitHub/media-organizer/build/windows/app.so")
   endif()
 endif()
 
@@ -287,5 +287,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/build/windows/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/GitHub/media-organizer/build/windows/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

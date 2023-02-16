@@ -6,7 +6,10 @@ class HomeController extends ChangeNotifier {
   static HomeController instance = HomeController();
 
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController imageLinkController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
 
+  String imagem = '';
   String overview = '';
   ValueNotifier<double> ratingApi = ValueNotifier(0);
   bool exit = true;
@@ -35,7 +38,7 @@ class HomeController extends ChangeNotifier {
     filterMenuvisible = !filterMenuvisible;
   }
 
-  void filterMedia({String pesquisa = ''}) {
+  void filterMedia() {
     final List<MediaType> confirmados = [];
 
     for (MediaType tipoMedia in Catalogo.instance.medias) {
@@ -56,11 +59,11 @@ class HomeController extends ChangeNotifier {
           return false;
         }
         if (media.categorias.isEmpty) {
-          return media.name.toLowerCase().contains(pesquisa.toLowerCase());
+          return media.name.toLowerCase().contains(searchController.text.toLowerCase());
         }
         for (Categoria categoria in media.categorias) {
           if (Catalogo.instance.categoriasFiltradas[categoria.id]) {
-            return media.name.toLowerCase().contains(pesquisa.toLowerCase());
+            return media.name.toLowerCase().contains(searchController.text.toLowerCase());
           }
         }
 
@@ -99,24 +102,57 @@ class HomeController extends ChangeNotifier {
     filterMedia();
   }
 
-  pegarApi(String movie) async {
+  pegarApi(String media, int typeId) async {
     var dio = Dio();
-    var response = await dio.get(
-        "https://api.themoviedb.org/3/search/movie?api_key=0e74149306746790179d66dcb245cdfe&query==$movie");
-    if (response.statusCode == 200) {
-      try {
-        HomeController.instance.overview =
-            (response.data["results"][0]["overview"]).toString();
-        ratingApi.value =
-            response.data["results"][0]["vote_average"].toDouble();
-      } catch (e) {}
-    } else {}
+    var response;
+    if (typeId == 0) {
+      response = await dio.get(
+          "https://api.themoviedb.org/3/search/movie?api_key=0e74149306746790179d66dcb245cdfe&query==$media");
+      if (response.statusCode == 200) {
+        try {
+          HomeController.instance.overview =
+              (response.data["results"][0]["overview"]).toString();
+          ratingApi.value =
+              response.data["results"][0]["vote_average"].toDouble();
+          HomeController.instance.imagem =
+              "https://image.tmdb.org/t/p/original/${response.data["results"][0]["poster_path"]}";
+        } catch (e) {}
+      } else {}
+    } else if (typeId == 1) {
+      response = await dio.get(
+          "https://api.themoviedb.org/3/search/tv?api_key=0e74149306746790179d66dcb245cdfe&query=$media");
+      if (response.statusCode == 200) {
+        try {
+          HomeController.instance.overview =
+              (response.data["results"][0]["overview"]).toString();
+          ratingApi.value =
+              response.data["results"][0]["vote_average"].toDouble();
+          HomeController.instance.imagem =
+              "https://image.tmdb.org/t/p/original/${response.data["results"][0]["poster_path"]}";
+        } catch (e) {}
+      } else {}
+    } else {
+      response = await dio.get(
+          "https://www.googleapis.com/books/v1/volumes?q=flowers+intitle:$media&key=AIzaSyA3W9uwFxT6ADb8BGT6y2P1idOH8x2qrjA");
+      if (response.statusCode == 200) {
+        try {
+          HomeController.instance.overview = (response.data["items"][0]
+                  ["volumeInfo"]["description"])
+              .toString();
+          ratingApi.value = response.data["items"][0]["volumeInfo"]
+                      ["averageRating"]
+                  .toDouble() *
+              2;
+          HomeController.instance.imagem = response.data["items"][0]
+              ["volumeInfo"]["imageLinks"]["thumbnail"];
+        } catch (e) {}
+      } else {}
+    }
   }
 
   createMedia(
       {required String name,
       String description = '',
-      required String imagem,
       required dynamic categoriasEscolhidas,
       required MediaType tipoSelected}) async {
     DateTime dateTimeConsumed = DateTime.fromMillisecondsSinceEpoch(0);
@@ -136,9 +172,10 @@ class HomeController extends ChangeNotifier {
     HomeController.instance.filterMedia();
   }
 
-  autoComplete(String name) async {
-    await pegarApi(name);
+  autoComplete(String name, int typeId) async {
+    await pegarApi(name, typeId);
     descriptionController.text = overview;
+    imageLinkController.text = imagem;
     notifyListeners();
   }
 

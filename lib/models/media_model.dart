@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:media_organizer/controllers/file_manager.dart';
 import 'package:media_organizer/controllers/home_controller.dart';
@@ -7,12 +8,22 @@ class MediaModel {
   double rating;
   String description;
   List<Categoria> categorias;
-  final Widget? image;
+  final Widget image;
+  String imageString;
   final DateTime dateTime;
   DateTime dateTimeConsumed;
+  int typeId;
 
-  MediaModel(this.name, this.rating, this.description, this.categorias,
-      this.image, this.dateTime, this.dateTimeConsumed);
+  MediaModel(
+      this.name,
+      this.rating,
+      this.description,
+      this.categorias,
+      this.image,
+      this.imageString,
+      this.dateTime,
+      this.dateTimeConsumed,
+      this.typeId);
 
   Map toJson() => {
         'name': name,
@@ -21,20 +32,35 @@ class MediaModel {
         'categorias': categorias.map((e) => e.toJson()).toList(),
         'datetime': dateTime.millisecondsSinceEpoch,
         'datetimeconsumed': dateTimeConsumed.millisecondsSinceEpoch,
+        'image': imageString,
+        'typeId': typeId,
       };
 
+  static Icon getIcon(int id) {
+    if (id == 0) {
+      return Icon(Icons.movie);
+    } else if (id == 1) {
+      return Icon(Icons.tv);
+    }
+    return Icon(Icons.book);
+  }
+
   factory MediaModel.fromJson(dynamic json) {
+    var icone = MediaModel.getIcon(json['typeId']);
     var categoriasObjsJson = json['categorias'] as List;
     List<Categoria> _categorias =
         categoriasObjsJson.map((e) => Categoria.fromJson(e)).toList();
     return MediaModel(
-        json['name'],
-        json['rating'] as double,
-        json['description'],
-        _categorias,
-        Icon(Icons.movie),
-        DateTime.fromMillisecondsSinceEpoch(json['datetime']),
-        DateTime.fromMillisecondsSinceEpoch(json['datetimeconsumed']));
+      json['name'],
+      json['rating'] as double,
+      json['description'],
+      _categorias,
+      json['image'].toString().isEmpty ? icone : Image.network(json['image']),
+      json['image'],
+      DateTime.fromMillisecondsSinceEpoch(json['datetime']),
+      DateTime.fromMillisecondsSinceEpoch(json['datetimeconsumed']),
+      json['typeId'],
+    );
   }
 }
 
@@ -81,6 +107,7 @@ class Catalogo {
   DateTime oldestDateTime = DateTime.now();
   DateTime newestDateTime = DateTime.fromMicrosecondsSinceEpoch(0);
   static Catalogo instance = Catalogo();
+  List<Goal> goals = [];
 
   List<MediaType> medias = [
     MediaType("Filmes", 0),
@@ -100,7 +127,7 @@ class Catalogo {
       required MediaType tipoSelected,
       required dateTimeConsumed}) {
     List<Categoria> categorias = [];
-    Widget? image = Icon(Icons.movie_rounded);
+    Widget? image = MediaModel.getIcon(tipoSelected.id);
     for (int i = 0; i < categoriasEscolhidas.length; i++) {
       if (categoriasEscolhidas[i]) {
         categorias.add(Catalogo.instance.categorias[i]);
@@ -122,13 +149,20 @@ class Catalogo {
       newestDateTime = DateTime.now();
     }
 
-    var media = MediaModel(name, rating, description, categorias, image,
-        newestDateTime, dateTimeConsumed);
+    var media = MediaModel(name, rating, description, categorias, image, imagem,
+        newestDateTime, dateTimeConsumed, tipoSelected.id);
     Catalogo.instance.addMedia(media, tipoSelected);
   }
 
   pegarMediasJson() async {
-    medias = await FileManager.instance.readJsonFile();
+    var medias_collected = await FileManager.instance.readJsonFile();
+    if (medias_collected.isNotEmpty){
+      medias = medias_collected;
+    }
+  }
+
+  pegarGoalsJson() async {
+    goals = await FileManager.instance.readJsonGoalsFile();
   }
 
   pegarCategoriasJson() async {
@@ -175,5 +209,50 @@ class Catalogo {
       }
     }
     return false;
+  }
+}
+
+class Goal {
+  final String name;
+  final List<Categoria> categorias;
+  final int quantMedias;
+  final List<MediaModel> selectedMedias;
+  final DateTime deadline;
+  final int typeId;
+  final DateTime creationDate;
+
+  Goal(this.name, this.categorias, this.quantMedias, this.selectedMedias,
+      this.deadline, this.creationDate, this.typeId);
+
+  Map toJson() => {
+        'name': name,
+        'categorias': categorias.map((e) => e.toJson()).toList(),
+        'quantMedias': quantMedias,
+        'selectedMedias': selectedMedias.map((e) => e.toJson()).toList(),
+        'deadline': deadline.millisecondsSinceEpoch,
+        'creationDate': creationDate.millisecondsSinceEpoch,
+        'typeId': typeId,
+      };
+
+  factory Goal.fromJson(dynamic json) {
+    var categoriasObjsJson = json['categorias'] as List;
+    List<Categoria> categorias =
+        categoriasObjsJson.map((e) => Categoria.fromJson(e)).toList();
+    var selectedMediasObjsJson = json['selectedMedias'] as List;
+    List<MediaModel> selectedMedias =
+        selectedMediasObjsJson.map((e) => MediaModel.fromJson(e)).toList();
+    DateTime criacao =
+        DateTime.fromMillisecondsSinceEpoch(json['creationDate']);
+    var goal = Goal(
+      json['name'],
+      categorias,
+      json['quantMedias'],
+      selectedMedias,
+      DateTime.fromMillisecondsSinceEpoch(json['deadline']),
+      criacao,
+      json["typeId"],
+    );
+    print(goal);
+    return goal;
   }
 }

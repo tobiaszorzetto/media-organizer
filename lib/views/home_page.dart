@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:context_menus/context_menus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:media_organizer/controllers/app_controller.dart';
 import 'package:media_organizer/controllers/file_manager.dart';
 import 'package:media_organizer/models/media_model.dart';
 import 'package:window_manager/window_manager.dart';
@@ -39,12 +40,34 @@ class _HomePageState extends State<HomePage> with WindowListener {
                 onTap: () => setState(() {
                   FileManager.instance.writeJsonCategoryFile();
                   FileManager.instance.writeJsonFile();
+                  FileManager.instance.writeJsonGoalsFile();
                 }),
-              )
+              ),
+              ListTile(
+                title: Text("Statistics"),
+                leading: Icon(Icons.graphic_eq),
+                onTap: () => setState(() {
+                  Navigator.of(context).popAndPushNamed("/statistics");
+                }),
+              ),
+              ListTile(
+                title: Text("Dark Mode"),
+                leading: Icon(Icons.dark_mode),
+                trailing: Switch(
+                  value: AppController.instance.darkMode,
+                  onChanged: (value) => setState(() {
+                    AppController.instance.changeTheme();
+                  }),
+                ),
+                onTap: () => setState(() {
+                  AppController.instance.changeTheme();
+                }),
+              ),
             ],
           ),
         ),
         appBar: AppBar(
+          title: Text("Media Organizer"),
           actions: [],
         ),
         body: WillPopScope(
@@ -121,7 +144,7 @@ class _HomePageState extends State<HomePage> with WindowListener {
                       },
                       child: Text('Categorias')),
                   Card(
-                    color: Color.fromARGB(255, 232, 243, 251),
+                    //color: Color.fromARGB(255, 232, 243, 251),
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: Catalogo.instance.category_count,
@@ -151,7 +174,7 @@ class _HomePageState extends State<HomePage> with WindowListener {
               children: [
                 TextButton(onPressed: () {}, child: Text('Mídias')),
                 Card(
-                  color: Color.fromARGB(255, 232, 243, 251),
+                  //color: Color.fromARGB(255, 232, 243, 251),
                   child: ListView.builder(
                     shrinkWrap: true,
                     itemCount: HomeController.instance.visibleMedias.length,
@@ -216,6 +239,7 @@ class _HomePageState extends State<HomePage> with WindowListener {
                 onPressed: (() => setState(() {
                       HomeController.instance.ratingApi.value = 0;
                       HomeController.instance.descriptionController.text = '';
+                      HomeController.instance.imageLinkController.text = '';
                       openAddMediaDialog();
                     })),
                 child: Icon(Icons.add),
@@ -226,11 +250,12 @@ class _HomePageState extends State<HomePage> with WindowListener {
               Expanded(
                 flex: 5,
                 child: TextField(
+                  controller: HomeController.instance.searchController,
                   decoration: InputDecoration(
                     label: Text('Pesquise titulos'),
                   ),
                   onChanged: (value) => setState(() {
-                    HomeController.instance.filterMedia(pesquisa: value);
+                    HomeController.instance.filterMedia();
                   }),
                 ),
               ),
@@ -397,109 +422,122 @@ class _HomePageState extends State<HomePage> with WindowListener {
             width: MediaQuery.of(context).size.width / 4,
             child: StatefulBuilder(
               builder: (context, setState) {
-                return ListView(
-                  //crossAxisAlignment: CrossAxisAlignment.start,
+                return Row(
                   children: [
-                    DropdownButton<MediaType>(
-                      value: tipoSelected,
-                      items: Catalogo.instance.medias
-                          .map((e) => DropdownMenuItem<MediaType>(
-                                value: e,
-                                child: Text(e.name),
-                              ))
-                          .toList(),
-                      onChanged: ((value) => setState(() {
-                            tipoSelected = value!;
-                          })),
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 4,
-                          child: TextField(
-                            onChanged: (value) => setState(() {
-                              name = value;
-                            }),
+                    Expanded(
+                      child: ListView(
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          DropdownButton<MediaType>(
+                            value: tipoSelected,
+                            items: Catalogo.instance.medias
+                                .map((e) => DropdownMenuItem<MediaType>(
+                                      value: e,
+                                      child: Text(e.name),
+                                    ))
+                                .toList(),
+                            onChanged: ((value) => setState(() {
+                                  tipoSelected = value!;
+                                })),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 4,
+                                child: TextField(
+                                  onChanged: (value) => setState(() {
+                                    name = value;
+                                  }),
+                                  decoration: InputDecoration(
+                                    label: Text("nome da midia"),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: TextButton(
+                                    onPressed: (() => setState(() {
+                                          HomeController.instance.autoComplete(
+                                              name, tipoSelected.id);
+                                        })),
+                                    child: Text("Auto-complete")),
+                              ),
+                            ],
+                          ),
+                          TextField(
+                            controller:
+                                HomeController.instance.descriptionController,
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  HomeController.instance.overview = value;
+                                },
+                              );
+                            },
                             decoration: InputDecoration(
-                              label: Text("nome da midia"),
+                              label: Text("descrição da midia"),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: TextButton(
-                              onPressed: (() => setState(() {
-                                    HomeController.instance.autoComplete(name);
-                                  })),
-                              child: Text("Auto-complete")),
-                        ),
-                      ],
-                    ),
-                    TextField(
-                      controller: HomeController.instance.descriptionController,
-                      onChanged: (value) {
-                        setState(
-                          () {
-                            HomeController.instance.overview = value;
-                          },
-                        );
-                      },
-                      decoration: InputDecoration(
-                        label: Text("descrição da midia"),
-                      ),
-                    ),
-                    CheckboxListTile(
-                      title: Text("Já consumido"),
-                      value: HomeController.instance.consumed,
-                      onChanged: (value) => setState(() {
-                        HomeController.instance.consumed = value!;
-                      }),
-                    ),
-                    Text('Avaliação'),
-                    SizedBox(
-                      child: ValueListenableBuilder<double>(
-                          valueListenable: HomeController.instance.ratingApi,
-                          builder: (context, ratingValue, _) {
-                            return Slider(
-                              value: HomeController.instance.ratingApi.value,
-                              max: 10,
-                              divisions: 20,
-                              label: HomeController.instance.ratingApi.value
-                                  .toString(),
-                              onChanged: ((value) => setState(() {
-                                    HomeController.instance.ratingApi.value =
-                                        value;
-                                  })),
-                            );
-                          }),
-                    ),
-                    TextField(
-                      onChanged: (value) {
-                        imagem = value;
-                      },
-                      decoration: InputDecoration(
-                        label: Text("link de imagem (opcional)"),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    Text("categorias"),
-                    Card(
-                      child: SizedBox(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: Catalogo.instance.category_count,
-                          itemBuilder: ((context, index) {
-                            return CheckboxListTile(
-                              value: categoriasEscolhidas[index],
-                              title: Text(
-                                  Catalogo.instance.categorias[index].name),
-                              onChanged: (value) => setState(() {
-                                categoriasEscolhidas[index] = value!;
-                              }),
-                            );
-                          }),
-                        ),
+                          CheckboxListTile(
+                            title: Text("Já consumido"),
+                            value: HomeController.instance.consumed,
+                            onChanged: (value) => setState(() {
+                              HomeController.instance.consumed = value!;
+                            }),
+                          ),
+                          Text('Avaliação'),
+                          SizedBox(
+                            child: ValueListenableBuilder<double>(
+                                valueListenable:
+                                    HomeController.instance.ratingApi,
+                                builder: (context, ratingValue, _) {
+                                  return Slider(
+                                    value:
+                                        HomeController.instance.ratingApi.value,
+                                    max: 10,
+                                    divisions: 20,
+                                    label: HomeController
+                                        .instance.ratingApi.value
+                                        .toString(),
+                                    onChanged: ((value) => setState(() {
+                                          HomeController
+                                              .instance.ratingApi.value = value;
+                                        })),
+                                  );
+                                }),
+                          ),
+                          TextField(
+                            controller:
+                                HomeController.instance.imageLinkController,
+                            onChanged: (value) {
+                              HomeController.instance.imagem = value;
+                            },
+                            decoration: InputDecoration(
+                              label: Text("link de imagem (opcional)"),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Text("categorias"),
+                          Card(
+                            child: SizedBox(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: Catalogo.instance.category_count,
+                                itemBuilder: ((context, index) {
+                                  return CheckboxListTile(
+                                    value: categoriasEscolhidas[index],
+                                    title: Text(Catalogo
+                                        .instance.categorias[index].name),
+                                    onChanged: (value) => setState(() {
+                                      categoriasEscolhidas[index] = value!;
+                                    }),
+                                  );
+                                }),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -512,7 +550,6 @@ class _HomePageState extends State<HomePage> with WindowListener {
                 onPressed: (() => setState(() {
                       HomeController.instance.createMedia(
                           name: name,
-                          imagem: imagem,
                           categoriasEscolhidas: categoriasEscolhidas,
                           tipoSelected: tipoSelected);
                       Navigator.of(context).pop();
@@ -551,73 +588,80 @@ class _HomePageState extends State<HomePage> with WindowListener {
           title: Text("Editar midia"),
           content: Container(
             height: MediaQuery.of(context).size.height / 2,
-            width: MediaQuery.of(context).size.width / 4,
+            width: MediaQuery.of(context).size.width / 2,
             child: StatefulBuilder(
               builder: (context, setState) {
-                return ListView(
-                  //crossAxisAlignment: CrossAxisAlignment.start,
+                return Row(
                   children: [
-                    TextFormField(
-                      initialValue: name,
-                      onChanged: (value) => setState(() {
-                        name = value;
-                      }),
-                      decoration: InputDecoration(
-                        label: Text("nome da midia"),
-                      ),
-                    ),
-                    TextFormField(
-                      initialValue: description,
-                      onChanged: (value) {
-                        setState(
-                          () {
-                            description = value;
-                          },
-                        );
-                      },
-                      decoration: InputDecoration(
-                        label: Text("descrição da midia"),
-                      ),
-                    ),
-                    CheckboxListTile(
-                      title: Text("Já consumido"),
-                      value: consumed,
-                      onChanged: (value) => setState(() {
-                        consumed = value!;
-                      }),
-                    ),
-                    Text('Avaliação'),
-                    SizedBox(
-                      child: Slider(
-                        value: rating,
-                        max: 10,
-                        divisions: 20,
-                        label: rating.toString(),
-                        onChanged: ((value) => setState(() {
-                              rating = value;
-                            })),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    Text("categorias"),
-                    Card(
-                      child: SizedBox(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: Catalogo.instance.category_count,
-                          itemBuilder: ((context, index) {
-                            return CheckboxListTile(
-                              value: categoriasEscolhidas[index],
-                              title: Text(
-                                  Catalogo.instance.categorias[index].name),
-                              onChanged: (value) => setState(() {
-                                categoriasEscolhidas[index] = value!;
-                              }),
-                            );
-                          }),
-                        ),
+                    Expanded(child: media.image),
+                    Expanded(
+                      child: ListView(
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextFormField(
+                            initialValue: name,
+                            onChanged: (value) => setState(() {
+                              name = value;
+                            }),
+                            decoration: InputDecoration(
+                              label: Text("nome da midia"),
+                            ),
+                          ),
+                          TextFormField(
+                            initialValue: description,
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  description = value;
+                                },
+                              );
+                            },
+                            decoration: InputDecoration(
+                              label: Text("descrição da midia"),
+                            ),
+                          ),
+                          CheckboxListTile(
+                            title: Text("Já consumido"),
+                            value: consumed,
+                            onChanged: (value) => setState(() {
+                              consumed = value!;
+                            }),
+                          ),
+                          Text('Avaliação'),
+                          SizedBox(
+                            child: Slider(
+                              value: rating,
+                              max: 10,
+                              divisions: 20,
+                              label: rating.toString(),
+                              onChanged: ((value) => setState(() {
+                                    rating = value;
+                                  })),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Text("categorias"),
+                          Card(
+                            child: SizedBox(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: Catalogo.instance.category_count,
+                                itemBuilder: ((context, index) {
+                                  return CheckboxListTile(
+                                    value: categoriasEscolhidas[index],
+                                    title: Text(Catalogo
+                                        .instance.categorias[index].name),
+                                    onChanged: (value) => setState(() {
+                                      categoriasEscolhidas[index] = value!;
+                                    }),
+                                  );
+                                }),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
