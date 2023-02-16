@@ -1,0 +1,10 @@
+^D:\GITHUB\MEDIA-ORGANIZER\WINDOWS\FLUTTER\EPHEMERAL\.PLUGIN_SYMLINKS\SCREEN_RETRIEVER\WINDOWS\CMAKELISTS.TXT
+setlocal
+D:\VisualStudio\IDE\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe -SD:/GitHub/media-organizer/windows -BD:/GitHub/media-organizer/build/windows --check-stamp-file D:/GitHub/media-organizer/build/windows/plugins/screen_retriever/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

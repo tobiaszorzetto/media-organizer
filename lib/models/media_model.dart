@@ -155,7 +155,10 @@ class Catalogo {
   }
 
   pegarMediasJson() async {
-    medias = await FileManager.instance.readJsonFile();
+    var medias_collected = await FileManager.instance.readJsonFile();
+    if (medias_collected.isNotEmpty){
+      medias = medias_collected;
+    }
   }
 
   pegarGoalsJson() async {

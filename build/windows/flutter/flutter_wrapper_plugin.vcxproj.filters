@@ -1,25 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\tobia_mzp3yru\Documents\GitHub\media-organizer\windows\flutter\ephemeral\cpp_client_wrapper\core_implementations.cc">
+    <ClCompile Include="D:\GitHub\media-organizer\windows\flutter\ephemeral\cpp_client_wrapper\core_implementations.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\tobia_mzp3yru\Documents\GitHub\media-organizer\windows\flutter\ephemeral\cpp_client_wrapper\standard_codec.cc">
+    <ClCompile Include="D:\GitHub\media-organizer\windows\flutter\ephemeral\cpp_client_wrapper\standard_codec.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\tobia_mzp3yru\Documents\GitHub\media-organizer\windows\flutter\ephemeral\cpp_client_wrapper\plugin_registrar.cc">
+    <ClCompile Include="D:\GitHub\media-organizer\windows\flutter\ephemeral\cpp_client_wrapper\plugin_registrar.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\tobia_mzp3yru\Documents\GitHub\media-organizer\windows\flutter\CMakeLists.txt" />
+    <CustomBuild Include="D:\GitHub\media-organizer\windows\flutter\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{8117EA35-7618-3CE7-A86D-4220FE9FBB13}</UniqueIdentifier>
+      <UniqueIdentifier>{E5804469-0225-3FB6-990D-0A99B639A34E}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{A01D353D-4C17-3558-90BA-91F1F9124F46}</UniqueIdentifier>
+      <UniqueIdentifier>{D3CA27E2-A703-3EE9-A3BD-28125F060C49}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

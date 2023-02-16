@@ -7,6 +7,7 @@ class HomeController extends ChangeNotifier {
 
   TextEditingController descriptionController = TextEditingController();
   TextEditingController imageLinkController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
 
   String imagem = '';
   String overview = '';
@@ -37,7 +38,7 @@ class HomeController extends ChangeNotifier {
     filterMenuvisible = !filterMenuvisible;
   }
 
-  void filterMedia({String pesquisa = ''}) {
+  void filterMedia() {
     final List<MediaType> confirmados = [];
 
     for (MediaType tipoMedia in Catalogo.instance.medias) {
@@ -58,11 +59,11 @@ class HomeController extends ChangeNotifier {
           return false;
         }
         if (media.categorias.isEmpty) {
-          return media.name.toLowerCase().contains(pesquisa.toLowerCase());
+          return media.name.toLowerCase().contains(searchController.text.toLowerCase());
         }
         for (Categoria categoria in media.categorias) {
           if (Catalogo.instance.categoriasFiltradas[categoria.id]) {
-            return media.name.toLowerCase().contains(pesquisa.toLowerCase());
+            return media.name.toLowerCase().contains(searchController.text.toLowerCase());
           }
         }
 

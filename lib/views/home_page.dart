@@ -250,11 +250,12 @@ class _HomePageState extends State<HomePage> with WindowListener {
               Expanded(
                 flex: 5,
                 child: TextField(
+                  controller: HomeController.instance.searchController,
                   decoration: InputDecoration(
                     label: Text('Pesquise titulos'),
                   ),
                   onChanged: (value) => setState(() {
-                    HomeController.instance.filterMedia(pesquisa: value);
+                    HomeController.instance.filterMedia();
                   }),
                 ),
               ),

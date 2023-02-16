@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/tobia_mzp3yru/Documents/GitHub/media-organizer/windows/runner
+# Install script for directory: D:/GitHub/media-organizer/windows/runner
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
