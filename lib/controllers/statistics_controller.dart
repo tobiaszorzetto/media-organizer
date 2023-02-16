@@ -49,12 +49,17 @@ class StatisticsController extends ChangeNotifier {
     if (media.categorias.isEmpty) {
       return true;
     }
-    for (Categoria cat in media.categorias) {
-      if (categoriasEscolhidas[cat.id]) {
-        return true;
+    for (bool escolhida in categoriasEscolhidas) {
+      if (escolhida) {
+        for (Categoria cat in media.categorias) {
+          if (categoriasEscolhidas[cat.id]) {
+            return true;
+          }
+        }
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   void updateQuantMediasGoal(int value) {
@@ -104,8 +109,7 @@ class StatisticsController extends ChangeNotifier {
     quant = 0;
     bool addedGoalCreation = false;
     for (MediaModel media in mediasInGoal) {
-      quant++;
-      if (media.dateTimeConsumed.millisecond < showedCreationDate.millisecond &&
+      if (media.dateTimeConsumed.millisecond > showedCreationDate.millisecond &&
           !addedGoalCreation) {
         addedGoalCreation = true;
         chartData.add(
@@ -113,10 +117,14 @@ class StatisticsController extends ChangeNotifier {
       }
       chartData
           .add(ChartData(media.name, media.dateTimeConsumed, quant.toDouble()));
+      quant++;
+      chartData
+          .add(ChartData(media.name, media.dateTimeConsumed, quant.toDouble()));
     }
 
     if (!addedGoalCreation) {
-      chartData.add(ChartData(showedGoalName, showedCreationDate, 0));
+      chartData
+          .add(ChartData(showedGoalName, showedCreationDate, quant.toDouble()));
     }
 
     chartData.add(ChartData("agora", DateTime.now(), quant.toDouble()));

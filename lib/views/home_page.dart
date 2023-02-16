@@ -67,6 +67,7 @@ class _HomePageState extends State<HomePage> with WindowListener {
           ),
         ),
         appBar: AppBar(
+          title: Text("Media Organizer"),
           actions: [],
         ),
         body: WillPopScope(

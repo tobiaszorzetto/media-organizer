@@ -6,6 +6,7 @@ import 'package:media_organizer/controllers/statistics_controller.dart';
 import 'package:media_organizer/models/media_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:intl/intl.dart';
 
 class StatisticsPage extends StatefulWidget {
   @override
@@ -62,7 +63,15 @@ class _StatisticsPage extends State<StatisticsPage> {
               child: Card(
                 child: Column(
                   children: [
-                    Expanded(flex: 2, child: showGraph()),
+                    Expanded(
+                        flex: 2,
+                        child: Card(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            child: showGraph())),
                     Expanded(child: showGoalInfo())
                   ],
                 ),
@@ -75,55 +84,110 @@ class _StatisticsPage extends State<StatisticsPage> {
   }
 
   Widget showGoalInfo() {
-    return Card(
-      child: Column(
-        children: [
-          Text(StatisticsController.instance.showedGoalName),
-          Text(
-              "Quantity of medias to complete: ${StatisticsController.instance.mediasInGoal.length}/${StatisticsController.instance.quantMediasGoal}"),
-          Card(
-            elevation: 5,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Medias included in this goal:"),
-                showListGoal(),
-              ],
+    return SingleChildScrollView(
+      child: Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Color.fromARGB(255, 255, 255, 255)),
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        elevation: 50,
+        shadowColor: Colors.black,
+        color: Color.fromARGB(255, 35, 35, 35),
+        child: Column(
+          children: [
+            SizedBox(
+              child: Text(StatisticsController.instance.showedGoalName,
+                  style: TextStyle(
+                    fontSize: 20,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 2.5
+                      ..color = Colors.blue[700]!,
+                  )),
             ),
-          ),
-        ],
+            Text(
+              "Quantity of medias to complete: ${StatisticsController.instance.mediasInGoal.length}/${StatisticsController.instance.quantMediasGoal - 1}",
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Medias included in this goal:"),
+                    Card(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(0.2),
+                          child: showListGoal(),
+                        )),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget showListGoal() {
     if (StatisticsController.instance.showedMedias.isEmpty) {
-      return ListView.builder(
-        shrinkWrap: true,
-        itemCount: StatisticsController.instance.mediasInGoal.length,
-        itemBuilder: ((context, index) {
-          return ListTile(
-            title: Text(StatisticsController.instance.mediasInGoal[index].name),
-          );
-        }),
+      return SizedBox(
+        width: 200,
+        height: 200,
+        child: SingleChildScrollView(
+          child: ListView.separated(
+            shrinkWrap: true,
+            itemCount: StatisticsController.instance.mediasInGoal.length,
+            itemBuilder: ((context, index) {
+              return ListTile(
+                title: Text(
+                    StatisticsController.instance.mediasInGoal[index].name),
+              );
+            }),
+            separatorBuilder: (context, index) {
+              return Divider(
+                thickness: 2,
+              );
+            },
+          ),
+        ),
       );
     }
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: StatisticsController.instance.showedMedias.length,
-      itemBuilder: ((context, index) {
-        if (StatisticsController.instance.mediasInGoal
-            .contains(StatisticsController.instance.showedMedias[index])) {
-          return ListTile(
-              trailing: const Icon(Icons.check),
-              title:
-                  Text(StatisticsController.instance.showedMedias[index].name));
-        }
-        return ListTile(
-            trailing: const Icon(Icons.cancel),
-            title:
-                Text(StatisticsController.instance.showedMedias[index].name));
-      }),
+    return SizedBox(
+      child: SingleChildScrollView(
+        child: ListView.separated(
+          shrinkWrap: true,
+          itemCount: StatisticsController.instance.showedMedias.length,
+          separatorBuilder: (context, index) {
+            return Divider(
+              thickness: 2,
+            );
+          },
+          itemBuilder: ((context, index) {
+            if (StatisticsController.instance.mediasInGoal
+                .contains(StatisticsController.instance.showedMedias[index])) {
+              return Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: ListTile(
+                    trailing: const Icon(Icons.check),
+                    title: Text(StatisticsController
+                        .instance.showedMedias[index].name)),
+              );
+            }
+            return ListTile(
+                trailing: const Icon(Icons.cancel),
+                title: Text(
+                    StatisticsController.instance.showedMedias[index].name));
+          }),
+        ),
+      ),
     );
   }
 
@@ -132,11 +196,11 @@ class _StatisticsPage extends State<StatisticsPage> {
       StatisticsController.instance.showGraph();
     });
     return SfCartesianChart(
-      title: ChartTitle(text: "Goal"),
+      primaryXAxis: DateTimeAxis(),
       series: [
         LineSeries(
           dataSource: StatisticsController.instance.chartData,
-          xValueMapper: (ChartData ch, _) => ch.xAxis.millisecondsSinceEpoch,
+          xValueMapper: (ChartData ch, _) => ch.xAxis,
           yValueMapper: (ChartData ch, _) => ch.yAxis,
         )
       ],

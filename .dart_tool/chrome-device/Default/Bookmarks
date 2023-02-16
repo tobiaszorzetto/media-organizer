@@ -1,0 +1,100 @@
+{
+   "checksum": "152961c5c8397bc0ea43f6404e4b28d5",
+   "roots": {
+      "bookmark_bar": {
+         "children": [ {
+            "date_added": "13236285475144588",
+            "date_last_used": "13314229264912501",
+            "guid": "6a0b0adb-16b2-4a41-bd05-4ee70947b1d0",
+            "id": "5",
+            "name": "Gmail",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://accounts.google.com/b/0/AddMailService"
+         }, {
+            "date_added": "13236285475147450",
+            "date_last_used": "0",
+            "guid": "109eb907-ba55-4cea-8f64-e068cc5892a6",
+            "id": "6",
+            "name": "YouTube",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://youtube.com/"
+         }, {
+            "date_added": "13236882187530885",
+            "date_last_used": "0",
+            "guid": "c7813f6e-a627-4a5d-9ec4-450be72de7d4",
+            "id": "7",
+            "name": "moodle",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://moodle.ggte.unicamp.br/my/"
+         }, {
+            "date_added": "13274044484004519",
+            "date_last_used": "13314550243109655",
+            "guid": "ed733a50-9a1d-45f8-b4fb-791f8fd8f2ed",
+            "id": "8",
+            "name": "GER",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://drive.google.com/drive/u/1/folders/0BxhoiS5I6UWbX0g2VnhpcmFhbHM?resourcekey=0-fu3WvEW19nuNCIyr06yx1A"
+         }, {
+            "date_added": "13295989160664272",
+            "date_last_used": "13313450387542249",
+            "guid": "35d6d3f5-091d-4228-acef-b878bf7b666f",
+            "id": "9",
+            "name": "Turmas",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://classroom.google.com/u/1/h"
+         }, {
+            "date_added": "13317711815105763",
+            "date_last_used": "0",
+            "guid": "99160c76-ac7a-4ff0-b1be-7c8ffce994f4",
+            "id": "10",
+            "name": "Server | Aternos | Free Minecraft Server",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://aternos.org/server/"
+         } ],
+         "date_added": "13320034881534728",
+         "date_last_used": "0",
+         "date_modified": "13317711815105763",
+         "guid": "0bc5d13f-2cba-5d74-951f-3f233fe6c908",
+         "id": "1",
+         "name": "Favorites bar",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13320034881534729",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "82b081ec-3dd3-529c-8475-ab6c344590dd",
+         "id": "2",
+         "name": "Other favorites",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13320034881534730",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "4cf2e351-0e85-532b-bb37-df045d8f8d0f",
+         "id": "3",
+         "name": "Mobile favorites",
+         "source": "unknown",
+         "type": "folder"
+      }
+   },
+   "sync_metadata": "CjEKDgiIgQISCA04PB+GAQAAEgAgASoYWkR2T3VjWFErL0lPWGE2b3BGa2tudz09oAYMEokBCAIShAEKHFljU1RvbnZFU1B3cUNzNEwyY3JWaHY2OEw5OD0SJGY5ZmY1ZDE1LTE5ZDItNTUxMC1iNzBhLWY0NDg3YzlkNjc3NxgAIAAoADCn4aGlsDA4measkOkvQJnmrJDpL0ocb1BWa2h3QlJiVjY1S0NXUjIrSU9OSFdvT3U4PVoAZQAAAAASpwEIBRKiAQocKzlMcEl4cTZyd0dzb0VQV3MwOEN0U1JGYkpRPRIkMTVkMzMwNDQtMDE0My00ZGY5LTk4OWYtYWQ3NzdkODJjNGEyGAAgAigCMIfw8PnhMDiusq2Q6S9A2fPw+eEwShw4QVMyT0wrbS9sMHluZmlKYnZML1I3V0NOWXM9Wh4iHEh1R09LbWZzV3Jlc3U1UGZpOVRGVDJkYkJhND1li6CM0RKJAQgDEoQBChxuamdEdTg4ZUNydlhwODZwRDdmSEdjcUZwODg9EiQ5MTI2ZjVlNi1kZmQwLTUxZjYtOGU3ZS1lYWIyZTJkYWZhODkYACAAKAAwp+GhpbAwOPfmrJDpL0D35qyQ6S9KHHl6TkIwMWNuNTRBN2NSVTB1VCsvUGdtVHRVbz1aAGUAAAAAEqgBCAkSowEKHFAwbmVsVXJ0anN2Ylg0cWRpdU5pNXhBNVAzdz0SJDM1ZDZkM2Y1LTA5MWQtNDIyOC1hY2VmLWI4NzhiZjdiNjY2ZhgAIAIoAjCL8PD54TA49LX+r4gwQNrz8PnhMEocRkZoU1doLzdvZWdQMy92eHM5WXN4REFMV1A4PVofIh3/eWxuTXRuZEdnazRGYWF2VnlXd2IydlQwVHFJPWULUWxnEqgBCAYSowEKHDc2WlY4OHppUzY3cUR4Z1B6UzFQMG9sY1VQYz0SJGMyM2E5NzRlLTg1MWMtNDZiMS05MjY0LTE5YTQ4MzBjMDBiNRgAIAIoAjCI8PD54TA48LGtkOkvQNrz8PnhMEocTnUyYzg2N3pXS0RqQkZIUWtQbXc2TmptNVpZPVofIh2kQkJXUEdhTFRTY2ZnTGtNUWxQU1hWQ0V4UnFJPWU4+TkzEokBCAEShAEKHHl4Si82ZnZrZWNyN2twNUVRekI0dFdMcGRiRT0SJDQ1OWMyY2Q4LTZjYzctNTg2Yi04YzQxLTI3MjdhMzAzOWZiMhgAIAAoADCn4aGlsDA4ieaskOkvQInmrJDpL0ocYVJDV0xnaEY5YjVJbnFLSUR2dUovanZRa0ZjPVoAZQAAAAASqAEIBxKjAQocd01sWmlDM0RsUE15NnByeFlGTmpGZW1mQjlNPRIkNDQ2YmVlMjctMDA5Yy00ZjZkLTllMGItM2ZhNjlhNzdiZjNlGAAgAigCMIzw8PnhMDiPsq2Q6S9A2vPw+eEwShxxdkxrM2sydS9yTk42UkYvRXZSZCtTdHZZQlU9Wh8iHfRuVU5CMUlqeGszd3BMSFpPa3Bmdm9TcDhSSGM9ZSEhAFsSqAEICBKjAQocTVk3SXZQOEJBcWYyWDAzTWtyU001d1lVRXJnPRIkZWQ3MzNhNTAtOWExZC00NWY4LWI0ZmItNzkxZjhmZDhmMmVkGAAgAigCMIrw8PnhMDjRsa2Q6S9A2vPw+eEwShwzZHRGSDBKQUVBZGZMMkdvaUxwTlQ2UlM2UUE9Wh8iHf12L1VZMDQ1RUU4bWxvYkhDRU1FWkVjTUkyVlU9ZboKLFESqQEIChKkAQocYk1obzgwbTIvb1p4MExoQ1liczhHK3lmY2hzPRIkOTkxNjBjNzYtYWM3YS00ZmYwLWIxYmUtN2M4ZmZjZTk5NGY0GAAgAigCMInw8PnhMDjC7ZOm2TBA2/Pw+eEwShxlYzM2aU80ZGRUNHdCZWM1YVZCc1NDK2hFZ1k9WiAiHv+8UW1DV1R0NVFRRkJBVE11YjV4MDR0dXpoeGhVPWVL0gvwMAA4AA==",
+   "version": 1
+}
