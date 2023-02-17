@@ -163,9 +163,9 @@ class HomeController extends ChangeNotifier {
     Catalogo.instance.createMedia(
         name: name,
         rating: ratingApi.value,
-        description: HomeController.instance.overview,
+        description: HomeController.instance.descriptionController.text,
         categoriasEscolhidas: categoriasEscolhidas,
-        imagem: imagem,
+        imagem: imageLinkController.text,
         tipoSelected: tipoSelected,
         dateTimeConsumed: dateTimeConsumed);
 
