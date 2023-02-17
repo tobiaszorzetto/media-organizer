@@ -163,13 +163,15 @@ class HomeController extends ChangeNotifier {
     Catalogo.instance.createMedia(
         name: name,
         rating: ratingApi.value,
-        description: HomeController.instance.descriptionController.text,
+        description: descriptionController.text,
         categoriasEscolhidas: categoriasEscolhidas,
         imagem: imageLinkController.text,
         tipoSelected: tipoSelected,
         dateTimeConsumed: dateTimeConsumed);
 
-    HomeController.instance.filterMedia();
+    
+    filterMedia();
+    filterDateObservados = RangeValues(filterDateObservados.start, DateTime.now().millisecondsSinceEpoch.toDouble());
   }
 
   autoComplete(String name, int typeId) async {

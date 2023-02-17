@@ -248,7 +248,7 @@ class _HomePageState extends State<HomePage> with WindowListener {
                 width: 20,
               ),
               Expanded(
-                flex: 5,
+                flex: 3,
                 child: TextField(
                   controller: HomeController.instance.searchController,
                   decoration: InputDecoration(
